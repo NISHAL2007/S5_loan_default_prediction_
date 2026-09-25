@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { fetchSampleApplicants, predictRisk } from '@/lib/api';
-import sample30 from '@/lib/sample_30_applicants.json';
+import sample30 from '../lib/sample_30_applicants.json';
 import { ShieldAlert, CheckCircle2, AlertTriangle, XCircle, Sliders } from 'lucide-react';
 
 export default function RiskAssessmentPage() {

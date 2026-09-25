@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { fetchSampleApplicants, fetchMaxSafeLoan, fetchStressMatrix } from '@/lib/api';
-import sample30 from '@/lib/sample_30_applicants.json';
+import sample30 from '../lib/sample_30_applicants.json';
 import { 
   Network, 
   Layers, 
