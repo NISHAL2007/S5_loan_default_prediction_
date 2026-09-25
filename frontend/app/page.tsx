@@ -22,7 +22,7 @@ import {
   Legend 
 } from 'recharts';
 
-import evaluationResults from './lib/evaluation_results.json';
+import evaluationResults from '../lib/evaluation_results.json';
 
 export default function OverviewPage() {
   const [modelInfo, setModelInfo] = useState<any>(evaluationResults);
