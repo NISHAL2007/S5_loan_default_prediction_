@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { fetchGlobalShap, fetchLocalShap, fetchSampleApplicants } from '../lib/api';
+import { fetchGlobalShap, fetchLocalShap, fetchSampleApplicants } from '@/lib/api';
 import { BrainCircuit, AlertCircle, ShieldCheck } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 

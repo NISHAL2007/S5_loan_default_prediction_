@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { fetchCounterfactual, fetchSampleApplicants } from '../lib/api';
+import { fetchCounterfactual, fetchSampleApplicants } from '@/lib/api';
 import { Workflow, ArrowRight, CheckCircle2, Info, AlertTriangle } from 'lucide-react';
 
 export default function CounterfactualPage() {

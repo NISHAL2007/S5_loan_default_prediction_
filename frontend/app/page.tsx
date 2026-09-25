@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { fetchModelInfo } from './lib/api';
+import { fetchModelInfo } from '@/lib/api';
 import { 
   Users, 
   AlertTriangle, 
