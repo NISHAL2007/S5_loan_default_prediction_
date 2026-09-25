@@ -82,7 +82,7 @@ export default function PipelineArchitecturePage() {
         }
       },
       evaluated_applicant: {
-        applicant_id: `APPLICANT-#${selectedIdx + 1:02d}`,
+        applicant_id: `APPLICANT-#${String(selectedIdx + 1).padStart(2, '0')}`,
         attributes: current.applicant,
         baseline_default_probability: current.default_prob,
         baseline_status: current.status
@@ -214,14 +214,14 @@ export default function PipelineArchitecturePage() {
               }`}
             >
               <div className="flex items-center justify-between">
-                <span>Applicant #{s.index + 1:02d}</span>
+                <span>Applicant #{String(s.index + 1).padStart(2, '0')}</span>
                 {s.status === 'REJECTED' ? (
                   <span className="w-2 h-2 rounded-full bg-rose-500"></span>
                 ) : (
                   <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
                 )}
               </div>
-              <p className="text-[11px] text-zinc-500 mt-1">${s.applicant.credit_amount:,}</p>
+              <p className="text-[11px] text-zinc-500 mt-1">${s.applicant.credit_amount.toLocaleString()}</p>
               <p className="text-[10px] text-zinc-400 font-sans mt-0.5">{(s.default_prob * 100).toFixed(1)}% risk</p>
             </button>
           ))}
@@ -301,7 +301,7 @@ export default function PipelineArchitecturePage() {
                     }`}
                   >
                     <span className="text-[10px] text-zinc-400">
-                      Credit {cell.credit_pct:+.0f}% / Dur {cell.duration_pct:+.0f}%
+                      Credit {cell.credit_pct >= 0 ? '+' : ''}{cell.credit_pct}% / Dur {cell.duration_pct >= 0 ? '+' : ''}{cell.duration_pct}%
                     </span>
                     <span className="font-bold text-xs font-sans">
                       {(cell.default_probability * 100).toFixed(1)}%
