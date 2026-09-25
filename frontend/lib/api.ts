@@ -61,3 +61,23 @@ export async function fetchCounterfactual(applicant: Record<string, any>, thresh
   if (!res.ok) throw new Error('Failed to fetch counterfactual explanations');
   return res.json();
 }
+
+export async function fetchMaxSafeLoan(applicant: Record<string, any>, threshold = 0.50) {
+  const res = await fetch(`${API_BASE_URL}/novelty/max-safe-loan`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ applicant, threshold }),
+  });
+  if (!res.ok) throw new Error('Failed to calculate max safe loan ceiling');
+  return res.json();
+}
+
+export async function fetchStressMatrix(applicant: Record<string, any>) {
+  const res = await fetch(`${API_BASE_URL}/novelty/stress-matrix`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ applicant }),
+  });
+  if (!res.ok) throw new Error('Failed to generate stress matrix');
+  return res.json();
+}

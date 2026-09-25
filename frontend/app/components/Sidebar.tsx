@@ -8,7 +8,8 @@ import {
   BrainCircuit, 
   FlaskConical, 
   Workflow, 
-  Building2 
+  Building2,
+  Network
 } from 'lucide-react';
 
 const navItems = [
@@ -17,6 +18,7 @@ const navItems = [
   { href: '/explainability', label: 'Explainability (SHAP)', icon: BrainCircuit },
   { href: '/stability-lab', label: 'Stability Lab', icon: FlaskConical },
   { href: '/counterfactual', label: 'Counterfactual Analysis', icon: Workflow },
+  { href: '/pipeline-architecture', label: 'Pipeline & Novelty', icon: Network },
 ];
 
 export default function Sidebar() {
