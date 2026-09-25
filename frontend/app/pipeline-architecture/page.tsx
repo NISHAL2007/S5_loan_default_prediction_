@@ -13,7 +13,7 @@ import {
   Cpu, 
   ShieldCheck, 
   Database,
-  ArrowRight
+  Info
 } from 'lucide-react';
 
 export default function PipelineArchitecturePage() {
@@ -23,33 +23,39 @@ export default function PipelineArchitecturePage() {
   const [stressData, setStressData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [computingNovelty, setComputingNovelty] = useState(false);
+  const [apiError, setApiError] = useState('');
 
   useEffect(() => {
     fetchSampleApplicants()
       .then((data) => {
-        setSamples(data);
-        if (data.length > 0) {
-          loadNoveltyData(data[0].applicant);
+        const sampleList = Array.isArray(data) ? data : [];
+        setSamples(sampleList);
+        if (sampleList.length > 0) {
+          loadNoveltyData(sampleList[0].applicant);
         }
         setLoading(false);
       })
       .catch((err) => {
         console.error(err);
+        setApiError('Unable to connect to live backend API. Using cached local metadata.');
         setLoading(false);
       });
   }, []);
 
   const loadNoveltyData = async (applicant: Record<string, any>) => {
+    if (!applicant) return;
     setComputingNovelty(true);
+    setApiError('');
     try {
       const [maxSafeRes, stressRes] = await Promise.all([
-        fetchMaxSafeLoan(applicant, 0.50),
-        fetchStressMatrix(applicant),
+        fetchMaxSafeLoan(applicant, 0.50).catch(() => null),
+        fetchStressMatrix(applicant).catch(() => null),
       ]);
       setMaxSafeData(maxSafeRes);
       setStressData(stressRes);
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      setApiError('Failed to fetch novelty stress analytics from backend.');
     } finally {
       setComputingNovelty(false);
     }
@@ -57,13 +63,13 @@ export default function PipelineArchitecturePage() {
 
   const handleApplicantSelect = (idx: number) => {
     setSelectedIdx(idx);
-    if (samples[idx]) {
+    if (samples[idx] && samples[idx].applicant) {
       loadNoveltyData(samples[idx].applicant);
     }
   };
 
   const downloadAuditCertificate = () => {
-    if (!samples[selectedIdx] || !maxSafeData) return;
+    if (!samples[selectedIdx]) return;
     const current = samples[selectedIdx];
     const auditRecord = {
       project: "Loan Default Prediction with Explainability & Prediction Stability Analysis",
@@ -83,14 +89,14 @@ export default function PipelineArchitecturePage() {
       },
       evaluated_applicant: {
         applicant_id: `APPLICANT-#${String(selectedIdx + 1).padStart(2, '0')}`,
-        attributes: current.applicant,
-        baseline_default_probability: current.default_prob,
-        baseline_status: current.status
+        attributes: current?.applicant || {},
+        baseline_default_probability: current?.default_prob || 0.0,
+        baseline_status: current?.status || "UNKNOWN"
       },
       novelty_stress_audit: {
-        max_recommended_safe_loan: maxSafeData.max_recommended_safe_loan,
-        max_safe_loan_default_probability: maxSafeData.max_safe_loan_default_prob,
-        recommendation: maxSafeData.recommendation
+        max_recommended_safe_loan: maxSafeData?.max_recommended_safe_loan || "N/A",
+        max_safe_loan_default_probability: maxSafeData?.max_safe_loan_default_prob || "N/A",
+        recommendation: maxSafeData?.recommendation || "N/A"
       }
     };
 
@@ -112,8 +118,6 @@ export default function PipelineArchitecturePage() {
     );
   }
 
-  const currentSample = samples[selectedIdx] || {};
-
   return (
     <div className="space-y-8">
       {/* Page Header */}
@@ -126,6 +130,13 @@ export default function PipelineArchitecturePage() {
           Full end-to-end ML execution pipeline diagram, 30-applicant batch explorer, risk-adjusted safe loan ceiling, and stress test matrix.
         </p>
       </div>
+
+      {apiError && (
+        <div className="p-4 bg-amber-950/30 border border-amber-800/60 rounded-lg text-amber-300 font-mono text-xs flex items-center space-x-2">
+          <Info className="w-4 h-4 shrink-0 text-amber-400" />
+          <span>{apiError} Note: Ensure FastAPI backend is running (`python backend/app/main.py`).</span>
+        </div>
+      )}
 
       {/* SECTION 1: Full Pipeline Structure Diagram */}
       <div className="bg-[#141417] border border-zinc-800/80 p-6 rounded-xl space-y-4">
@@ -172,7 +183,7 @@ export default function PipelineArchitecturePage() {
           </div>
 
           <div className="bg-zinc-900 border border-zinc-800 p-3 rounded-lg flex flex-col items-center justify-center space-y-1">
-            <Workflow className="w-5 h-5 text-amber-400" />
+            <WorkflowIcon className="w-5 h-5 text-amber-400" />
             <span className="font-bold text-zinc-200">6. Recourse Engine</span>
             <span className="text-[10px] text-zinc-500">Wachter et al. (2017)</span>
           </div>
@@ -185,7 +196,7 @@ export default function PipelineArchitecturePage() {
           <div>
             <h2 className="text-sm font-semibold text-zinc-200 font-mono flex items-center space-x-2">
               <Database className="w-4 h-4 text-amber-400" />
-              <span>30-Applicant Test Set Batch Explorer</span>
+              <span>30-Applicant Test Set Batch Explorer (Full 30 Sample Profiles)</span>
             </h2>
             <p className="text-xs text-zinc-400 font-mono mt-0.5">
               Select any of the 30 evaluated test set applicants to inspect baseline risk and run real-time stress analytics.
@@ -201,9 +212,9 @@ export default function PipelineArchitecturePage() {
           </button>
         </div>
 
-        {/* Applicant Grid Selector */}
+        {/* Applicant Grid Selector (30 Items) */}
         <div className="grid grid-cols-2 md:grid-cols-6 gap-2 font-mono text-xs">
-          {samples.map((s) => (
+          {samples.slice(0, 30).map((s) => (
             <button
               key={s.index}
               onClick={() => handleApplicantSelect(s.index)}
@@ -221,8 +232,8 @@ export default function PipelineArchitecturePage() {
                   <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
                 )}
               </div>
-              <p className="text-[11px] text-zinc-500 mt-1">${s.applicant.credit_amount.toLocaleString()}</p>
-              <p className="text-[10px] text-zinc-400 font-sans mt-0.5">{(s.default_prob * 100).toFixed(1)}% risk</p>
+              <p className="text-[11px] text-zinc-500 mt-1">${(s.applicant?.credit_amount || 0).toLocaleString()}</p>
+              <p className="text-[10px] text-zinc-400 font-sans mt-0.5">{( (s.default_prob || 0) * 100).toFixed(1)}% risk</p>
             </button>
           ))}
         </div>
@@ -251,22 +262,26 @@ export default function PipelineArchitecturePage() {
               <div className="grid grid-cols-2 gap-3">
                 <div className="bg-zinc-900 p-3 rounded-lg border border-zinc-800">
                   <span className="text-zinc-400 text-[11px]">Requested Loan Amount</span>
-                  <p className="text-base font-bold text-zinc-200 mt-1">${maxSafeData.original_credit_amount.toLocaleString()}</p>
-                  <p className="text-[11px] text-rose-400 mt-0.5">Baseline Risk: {(maxSafeData.baseline_default_prob * 100).toFixed(1)}%</p>
+                  <p className="text-base font-bold text-zinc-200 mt-1">${(maxSafeData.original_credit_amount || 0).toLocaleString()}</p>
+                  <p className="text-[11px] text-rose-400 mt-0.5">Baseline Risk: {((maxSafeData.baseline_default_prob || 0) * 100).toFixed(1)}%</p>
                 </div>
 
                 <div className="bg-emerald-950/30 p-3 rounded-lg border border-emerald-800/80">
                   <span className="text-emerald-400 text-[11px] font-semibold">Max Safe Loan Ceiling</span>
-                  <p className="text-base font-bold text-emerald-300 mt-1">${maxSafeData.max_recommended_safe_loan.toLocaleString()}</p>
-                  <p className="text-[11px] text-emerald-400 mt-0.5">Safe Risk: {(maxSafeData.max_safe_loan_default_prob * 100).toFixed(1)}%</p>
+                  <p className="text-base font-bold text-emerald-300 mt-1">${(maxSafeData.max_recommended_safe_loan || 0).toLocaleString()}</p>
+                  <p className="text-[11px] text-emerald-400 mt-0.5">Safe Risk: {((maxSafeData.max_safe_loan_default_prob || 0) * 100).toFixed(1)}%</p>
                 </div>
               </div>
 
               <p className="text-zinc-300 font-sans leading-relaxed bg-zinc-900/60 p-3 rounded-lg border border-zinc-800">
-                💡 {maxSafeData.recommendation}
+                💡 {maxSafeData.recommendation || "Calculated risk ceiling available."}
               </p>
             </div>
-          ) : null}
+          ) : (
+            <div className="h-40 flex items-center justify-center text-zinc-500 font-mono">
+              Connect to live FastAPI backend to run real-time safe loan ceiling calculation.
+            </div>
+          )}
         </div>
 
         {/* NOVELTY 2: Combined Financial Stress Matrix */}
@@ -285,7 +300,7 @@ export default function PipelineArchitecturePage() {
             <div className="h-40 flex items-center justify-center text-zinc-500 font-mono">
               Generating stress matrix...
             </div>
-          ) : stressData ? (
+          ) : stressData && Array.isArray(stressData.stress_matrix) ? (
             <div className="space-y-2">
               <p className="text-[11px] text-zinc-400">
                 Simulates simultaneous <strong>Credit Amount ($\pm 20\%$)</strong> and <strong>Loan Duration ($\pm 20\%$)</strong> shocks:
@@ -301,10 +316,10 @@ export default function PipelineArchitecturePage() {
                     }`}
                   >
                     <span className="text-[10px] text-zinc-400">
-                      Credit {cell.credit_pct >= 0 ? '+' : ''}{cell.credit_pct}% / Dur {cell.duration_pct >= 0 ? '+' : ''}{cell.duration_pct}%
+                      {cell.credit_shift} / {cell.duration_shift}
                     </span>
                     <span className="font-bold text-xs font-sans">
-                      {(cell.default_probability * 100).toFixed(1)}%
+                      {((cell.default_probability || 0) * 100).toFixed(1)}%
                     </span>
                     <span className="text-[9px] font-bold uppercase tracking-wider">
                       {cell.risk_status}
@@ -313,9 +328,26 @@ export default function PipelineArchitecturePage() {
                 ))}
               </div>
             </div>
-          ) : null}
+          ) : (
+            <div className="h-40 flex items-center justify-center text-zinc-500 font-mono">
+              Connect to live FastAPI backend to render 3x3 shock matrix.
+            </div>
+          )}
         </div>
       </div>
     </div>
+  );
+}
+
+function WorkflowIcon(props: any) {
+  return (
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="6" height="6" rx="1"/>
+      <rect x="15" y="3" width="6" height="6" rx="1"/>
+      <rect x="9" y="15" width="6" height="6" rx="1"/>
+      <path d="M6 9v3a1 1 0 0 0 1 1h5"/>
+      <path d="M18 9v3a1 1 0 0 1-1 1h-5"/>
+      <path d="M12 13v2"/>
+    </svg>
   );
 }
