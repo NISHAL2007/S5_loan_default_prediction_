@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { fetchSampleApplicants, fetchMaxSafeLoan, fetchStressMatrix } from '@/lib/api';
+import sample30 from '@/lib/sample_30_applicants.json';
 import { 
   Network, 
   Layers, 
@@ -17,7 +18,7 @@ import {
 } from 'lucide-react';
 
 export default function PipelineArchitecturePage() {
-  const [samples, setSamples] = useState<any[]>([]);
+  const [samples, setSamples] = useState<any[]>(sample30);
   const [selectedIdx, setSelectedIdx] = useState(0);
   const [maxSafeData, setMaxSafeData] = useState<any>(null);
   const [stressData, setStressData] = useState<any>(null);
@@ -26,12 +27,14 @@ export default function PipelineArchitecturePage() {
   const [apiError, setApiError] = useState('');
 
   useEffect(() => {
+    if (sample30.length > 0) {
+      loadNoveltyData(sample30[0].applicant);
+    }
     fetchSampleApplicants()
       .then((data) => {
-        const sampleList = Array.isArray(data) ? data : [];
-        setSamples(sampleList);
-        if (sampleList.length > 0) {
-          loadNoveltyData(sampleList[0].applicant);
+        if (Array.isArray(data) && data.length >= 30) {
+          setSamples(data);
+          loadNoveltyData(data[0].applicant);
         }
         setLoading(false);
       })

@@ -2,35 +2,34 @@
 
 import { useEffect, useState } from 'react';
 import { fetchSampleApplicants, predictRisk } from '@/lib/api';
+import sample30 from '@/lib/sample_30_applicants.json';
 import { ShieldAlert, CheckCircle2, AlertTriangle, XCircle, Sliders } from 'lucide-react';
 
 export default function RiskAssessmentPage() {
-  const [samples, setSamples] = useState<any[]>([]);
+  const [samples, setSamples] = useState<any[]>(sample30);
   const [selectedIdx, setSelectedIdx] = useState(0);
-  const [applicant, setApplicant] = useState<Record<string, any>>({});
+  const [applicant, setApplicant] = useState<Record<string, any>>(sample30[0].applicant);
   const [threshold, setThreshold] = useState(0.50);
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
-  const [initLoading, setInitLoading] = useState(true);
+  const [initLoading, setInitLoading] = useState(false);
 
   useEffect(() => {
     fetchSampleApplicants()
       .then((data) => {
-        setSamples(data);
-        if (data.length > 0) {
+        if (Array.isArray(data) && data.length >= 30) {
+          setSamples(data);
           setApplicant(data[0].applicant);
         }
-        setInitLoading(false);
       })
       .catch((err) => {
-        console.error(err);
-        setInitLoading(false);
+        console.error("Using pre-loaded 30 sample applicants fallback:", err);
       });
   }, []);
 
   const handleSampleChange = (idx: number) => {
     setSelectedIdx(idx);
-    if (samples[idx]) {
+    if (samples[idx] && samples[idx].applicant) {
       setApplicant(samples[idx].applicant);
     }
   };
@@ -41,7 +40,6 @@ export default function RiskAssessmentPage() {
     try {
       const res = await predictRisk(applicant, threshold);
       setResult(res);
-      // Persist to localStorage for other pages
       localStorage.setItem('current_applicant', JSON.stringify(applicant));
       localStorage.setItem('current_threshold', String(threshold));
     } catch (err: any) {
@@ -51,35 +49,26 @@ export default function RiskAssessmentPage() {
     }
   };
 
-  if (initLoading) {
-    return (
-      <div className="flex items-center justify-center h-96 text-zinc-400 font-mono text-sm">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-400 mr-3"></div>
-        Loading applicant schema...
-      </div>
-    );
-  }
-
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-xl font-bold text-zinc-100 tracking-tight">Individual Risk Assessment Engine</h1>
         <p className="text-xs text-zinc-400 font-mono mt-1">
-          Compute real-time borrower default risk probability and evaluate threshold decisions.
+          Compute real-time borrower default risk probability and evaluate threshold decisions across 30 sample profiles.
         </p>
       </div>
 
-      {/* Preset Example Selector */}
+      {/* Preset Example Selector (30 Applicants) */}
       <div className="bg-[#141417] border border-zinc-800/80 p-4 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <label className="text-xs font-mono text-zinc-300 font-semibold">Preset Test Borrower:</label>
+        <label className="text-xs font-mono text-zinc-300 font-semibold">Preset Test Borrower (30 Applicants):</label>
         <select
           value={selectedIdx}
           onChange={(e) => handleSampleChange(Number(e.target.value))}
-          className="bg-zinc-900 border border-zinc-700/80 text-zinc-200 text-xs font-mono rounded-md px-3 py-2 focus:outline-none focus:border-amber-400 w-full md:w-96"
+          className="bg-zinc-900 border border-zinc-700/80 text-zinc-200 text-xs font-mono rounded-md px-3 py-2 focus:outline-none focus:border-amber-400 w-full md:w-[28rem]"
         >
-          {samples.map((s) => (
-            <option key={s.index} value={s.index}>
-              {s.label}
+          {samples.map((s, i) => (
+            <option key={s.index || i} value={s.index || i}>
+              {s.label || `Applicant ${i} (Age: ${s.applicant?.age}, Credit: $${s.applicant?.credit_amount})`}
             </option>
           ))}
         </select>
