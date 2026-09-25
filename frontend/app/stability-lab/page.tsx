@@ -6,6 +6,10 @@ import { FlaskConical, CheckCircle2, AlertTriangle, ShieldAlert } from 'lucide-r
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 const DEFAULT_STABILITY_DATA = {
+  base_probability: 0.4066,
+  average_abs_change: 0.0032,
+  stability_score: 99.68,
+  classification: "Highly Stable",
   baseline_probability: 0.4066,
   max_prob_diff: 0.0032,
   project_stability_score: 99.68,
@@ -70,10 +74,15 @@ export default function StabilityLabPage() {
     );
   }
 
-  const chartData = data.perturbation_table.map((row: any) => ({
+  const chartData = (data.perturbation_table || []).map((row: any) => ({
     scenario: row.Scenario,
     diff: row['Probability Difference'],
   }));
+
+  const baseProb = data?.base_probability ?? data?.baseline_probability ?? 0.4066;
+  const avgShift = data?.average_abs_change ?? data?.max_prob_diff ?? 0.0032;
+  const score = data?.stability_score ?? data?.project_stability_score ?? 99.68;
+  const classification = data?.classification ?? data?.stability_label ?? "Highly Stable";
 
   return (
     <div className="space-y-6">
@@ -89,21 +98,21 @@ export default function StabilityLabPage() {
         <div className="bg-[#141417] border border-zinc-800/80 p-5 rounded-xl space-y-1">
           <p className="text-xs text-zinc-400">Base Default Probability</p>
           <p className="text-2xl font-bold text-zinc-100 font-sans">
-            {(data.base_probability * 100).toFixed(2)}%
+            {(baseProb * 100).toFixed(2)}%
           </p>
         </div>
 
         <div className="bg-[#141417] border border-zinc-800/80 p-5 rounded-xl space-y-1">
           <p className="text-xs text-zinc-400">Average Abs Shift (Δ)</p>
           <p className="text-2xl font-bold text-amber-400 font-sans">
-            {(data.average_abs_change * 100).toFixed(2)}%
+            {(avgShift * 100).toFixed(2)}%
           </p>
         </div>
 
         <div className={`p-5 rounded-xl border space-y-1 ${
-          data.stability_score >= 85
+          score >= 85
             ? 'bg-emerald-950/30 border-emerald-800/80 text-emerald-300'
-            : data.stability_score >= 60
+            : score >= 60
             ? 'bg-amber-950/30 border-amber-800/80 text-amber-300'
             : 'bg-rose-950/30 border-rose-800/80 text-rose-300'
         }`}>
@@ -112,9 +121,9 @@ export default function StabilityLabPage() {
             <FlaskConical className="w-4 h-4" />
           </div>
           <p className="text-2xl font-bold font-sans">
-            {data.stability_score.toFixed(2)} / 100
+            {score.toFixed(2)} / 100
           </p>
-          <p className="text-[11px] font-semibold uppercase">{data.classification}</p>
+          <p className="text-[11px] font-semibold uppercase">{classification}</p>
         </div>
       </div>
 

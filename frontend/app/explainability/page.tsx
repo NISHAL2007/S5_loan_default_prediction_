@@ -31,6 +31,24 @@ const DEFAULT_LOCAL_SHAP = {
     { feature: "savings_status_>=1000", shap_value: -0.742, feature_value: ">=1000" },
     { feature: "housing_own", shap_value: -0.310, feature_value: "own" },
     { feature: "credit_history_existing paid", shap_value: -0.198, feature_value: "existing paid" }
+  ],
+  local_shap_breakdown: [
+    { feature: "savings_status_>=1000", shap_value: -0.742, feature_value: ">=1000" },
+    { feature: "checking_status_0<=X<200", shap_value: 0.621, feature_value: "0<=X<200" },
+    { feature: "duration", shap_value: 0.415, feature_value: 18 },
+    { feature: "housing_own", shap_value: -0.310, feature_value: "own" },
+    { feature: "other_payment_plans_bank", shap_value: 0.284, feature_value: "bank" },
+    { feature: "credit_history_existing paid", shap_value: -0.198, feature_value: "existing paid" }
+  ],
+  risk_increasing_factors: [
+    "Checking account status is moderate (0<=X<200), adding +0.621 to risk log-odds.",
+    "Loan duration (18 months) increases credit exposure (+0.415 log-odds).",
+    "Active bank payment plan increases short-term obligation (+0.284 log-odds)."
+  ],
+  risk_reducing_factors: [
+    "High savings account balance (>=1000) significantly reduces default risk (-0.742 log-odds).",
+    "Home ownership (housing: own) provides strong financial stability (-0.310 log-odds).",
+    "Good existing credit history (existing paid) demonstrates repayment reliability (-0.198 log-odds)."
   ]
 };
 
@@ -59,7 +77,7 @@ export default function ExplainabilityPage() {
 
         if (applicantDict) {
           const localRes = await fetchLocalShap(applicantDict).catch(() => null);
-          if (localRes && localRes.top_positive_features) {
+          if (localRes && (localRes.local_shap_breakdown || localRes.top_positive_features)) {
             setLocalShap(localRes);
           }
         }
@@ -88,6 +106,11 @@ export default function ExplainabilityPage() {
       </div>
     );
   }
+
+  const breakdownData = localShap?.local_shap_breakdown || [
+    ...(localShap?.top_positive_features || []),
+    ...(localShap?.top_negative_features || [])
+  ];
 
   return (
     <div className="space-y-6">
@@ -132,12 +155,12 @@ export default function ExplainabilityPage() {
             </div>
             <div className="h-80">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart layout="vertical" data={localShap.local_shap_breakdown} margin={{ top: 5, right: 10, left: 40, bottom: 5 }}>
+                <BarChart layout="vertical" data={breakdownData} margin={{ top: 5, right: 10, left: 40, bottom: 5 }}>
                   <XAxis type="number" stroke="#71717a" fontSize={11} />
                   <YAxis dataKey="feature" type="category" stroke="#a1a1aa" fontSize={10} width={130} />
                   <Tooltip contentStyle={{ backgroundColor: '#18181b', borderColor: '#3f3f46', borderRadius: '8px', color: '#f4f4f5' }} />
                   <Bar dataKey="shap_value" radius={[0, 4, 4, 0]}>
-                    {localShap.local_shap_breakdown.map((entry: any, index: number) => (
+                    {breakdownData.map((entry: any, index: number) => (
                       <Cell key={`cell-${index}`} fill={entry.shap_value > 0 ? '#f43f5e' : '#10b981'} />
                     ))}
                   </Bar>
@@ -157,7 +180,7 @@ export default function ExplainabilityPage() {
               <span>Factors Increasing Default Risk (+)</span>
             </h3>
             <ul className="space-y-1.5 text-rose-200/90 list-disc list-inside">
-              {localShap.risk_increasing_factors.map((f: string, i: number) => (
+              {(localShap?.risk_increasing_factors || []).map((f: string, i: number) => (
                 <li key={i}>{f}</li>
               ))}
             </ul>
@@ -169,7 +192,7 @@ export default function ExplainabilityPage() {
               <span>Factors Reducing Default Risk (-)</span>
             </h3>
             <ul className="space-y-1.5 text-emerald-200/90 list-disc list-inside">
-              {localShap.risk_reducing_factors.map((f: string, i: number) => (
+              {(localShap?.risk_reducing_factors || []).map((f: string, i: number) => (
                 <li key={i}>{f}</li>
               ))}
             </ul>
