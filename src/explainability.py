@@ -49,7 +49,7 @@ def get_local_explanation_summary(shap_values_row, feature_names, top_n=3):
 FEATURE_HUMAN_LABELS = {
     'checking_status': 'Checking Account Status',
     'savings_status': 'Savings Account Status',
-    'credit_amount': 'Requested Credit Amount',
+    'credit_amount': 'Credit Amount',
     'duration': 'Loan Duration',
     'age': 'Borrower Age',
     'credit_history': 'Credit History',
@@ -69,14 +69,29 @@ FEATURE_HUMAN_LABELS = {
     'foreign_worker': 'Foreign Worker Status'
 }
 
+ORIGINAL_NUM_COLS = ['credit_amount', 'duration', 'age', 'installment_commitment', 'residence_since', 'existing_credits', 'num_dependents']
+ORIGINAL_CAT_COLS = ['checking_status', 'credit_history', 'purpose', 'savings_status', 'employment', 'personal_status', 'other_parties', 'property_magnitude', 'other_payment_plans', 'housing', 'job', 'own_telephone', 'foreign_worker']
+
+def get_parent_feature_key(fname, num_cols=ORIGINAL_NUM_COLS, cat_cols=ORIGINAL_CAT_COLS):
+    """
+    Safely maps a transformed/one-hot feature name back to its original parent feature name.
+    DOES NOT use naive split('_')[0] to prevent mismapping credit_history -> credit or savings_status -> savings.
+    """
+    if fname in num_cols:
+        return fname
+    for cat in cat_cols:
+        if fname.startswith(f"{cat}_"):
+            return cat
+    return fname
+
 def generate_feature_explanation_sentence(feature_key, raw_val, impact, direction):
     """
     Generates a clear, applicant-specific human-language explanation sentence
-    incorporating the actual value and directional impact.
+    using non-causal phrasing ("contributed toward higher estimated default risk").
     """
     val_str = str(raw_val)
     if feature_key == 'credit_amount':
-        val_str = f"${float(raw_val):,.0f}"
+        val_str = f"{float(raw_val):,.0f}"
     elif feature_key == 'duration':
         val_str = f"{raw_val} months"
     elif feature_key == 'age':
@@ -89,37 +104,37 @@ def generate_feature_explanation_sentence(feature_key, raw_val, impact, directio
     if direction == 'increases_risk':
         if feature_key == 'checking_status':
             if val_str in ['<0', 'no checking']:
-                return f"Limited/negative checking status ({val_str}) indicates constrained liquid buffer and increases risk."
-            return f"Checking account balance ({val_str}) contributes to higher estimated risk relative to top tiers."
+                return f"Limited/negative checking status ({val_str}) indicates constrained liquid buffer and contributed toward higher estimated default risk."
+            return f"Checking account balance ({val_str}) contributed toward higher estimated default risk relative to top tiers."
         elif feature_key == 'savings_status':
-            return f"Low savings level ({val_str}) provides minimal financial reserve, contributing to higher estimated risk."
+            return f"Low savings level ({val_str}) provides minimal financial reserve, contributing toward higher estimated default risk."
         elif feature_key == 'credit_amount':
-            return f"The requested credit amount ({val_str}) increases debt service burden and risk exposure."
+            return f"The requested credit amount ({val_str}) increased debt service burden and contributed toward higher estimated default risk."
         elif feature_key == 'duration':
-            return f"Extended loan repayment duration ({val_str}) increases credit risk exposure over time."
+            return f"Extended loan repayment duration ({val_str}) increased credit risk exposure over time, contributing toward higher estimated default risk."
         elif feature_key == 'housing':
-            return f"Housing status ({val_str}) contributes to estimated risk relative to homeownership."
+            return f"Housing status ({val_str}) contributed toward higher estimated default risk relative to homeownership."
         elif feature_key == 'credit_history':
-            return f"Credit history record ({val_str}) adds risk weight to estimated default probability."
+            return f"Credit history record ({val_str}) contributed toward higher estimated default risk."
         elif feature_key == 'other_payment_plans':
-            return f"Active payment plan ({val_str}) increases short-term financial obligations."
+            return f"Active payment plan ({val_str}) increased short-term obligations and contributed toward higher estimated default risk."
         else:
-            return f"Feature {label} ({val_str}) contributes toward higher predicted default risk."
+            return f"Feature {label} ({val_str}) contributed toward higher estimated default risk."
     else: # decreases_risk / protective
         if feature_key == 'savings_status':
-            return f"Substantial savings reserves ({val_str}) provide a strong protective buffer, reducing default risk."
+            return f"Substantial savings reserves ({val_str}) provide a protective buffer, contributing toward lower estimated default risk."
         elif feature_key == 'checking_status':
-            return f"Strong checking account standing ({val_str}) provides liquidity, lowering default risk."
+            return f"Strong checking account standing ({val_str}) provides liquidity, contributing toward lower estimated default risk."
         elif feature_key == 'credit_history':
-            return f"Proven credit history ({val_str}) demonstrates repayment reliability, reducing default risk."
+            return f"Proven credit history ({val_str}) demonstrates repayment reliability, contributing toward lower estimated default risk."
         elif feature_key == 'housing':
-            return f"Homeownership ({val_str}) demonstrates asset stability, contributing toward lower risk."
+            return f"Homeownership ({val_str}) demonstrates asset stability, contributing toward lower estimated default risk."
         elif feature_key == 'age':
-            return f"Borrower age ({val_str}) provides financial maturity, contributing toward lower risk."
+            return f"Borrower age ({val_str}) provides financial stability, contributing toward lower estimated default risk."
         elif feature_key == 'duration':
-            return f"Shorter loan duration ({val_str}) limits total credit exposure time, lowering risk."
+            return f"Shorter loan duration ({val_str}) limits total exposure time, contributing toward lower estimated default risk."
         else:
-            return f"Feature {label} ({val_str}) contributes toward lower estimated default risk."
+            return f"Feature {label} ({val_str}) contributed toward lower estimated default risk."
 
 def generate_structured_explanation(model, preprocessor, applicant_dict, threshold=0.50, X_train_trans=None, feature_names=None):
     """
@@ -167,7 +182,6 @@ def generate_structured_explanation(model, preprocessor, applicant_dict, thresho
         else:
             row_vals = shap_res[0]
     elif hasattr(model, 'coef_'):
-        # Logistic Regression exact log-odds contribution: coef_ * x_transformed
         coefs = model.coef_[0]
         row_vals = coefs * trans[0]
         if feature_names is None:
@@ -176,11 +190,14 @@ def generate_structured_explanation(model, preprocessor, applicant_dict, thresho
     else:
         row_vals = np.zeros(trans.shape[1])
 
-    # Aggregate one-hot contributions back to parent raw features
+    # Safe Parent-Feature Aggregation (NO fname.split('_')[0])
+    num_cols = list(preprocessor.transformers_[0][2]) if hasattr(preprocessor, 'transformers_') else ORIGINAL_NUM_COLS
+    cat_cols = list(preprocessor.transformers_[1][2]) if hasattr(preprocessor, 'transformers_') else ORIGINAL_CAT_COLS
+
     parent_impacts = {}
     if feature_names is not None:
         for fname, impact in zip(feature_names, row_vals):
-            parent_key = fname.split('_')[0]
+            parent_key = get_parent_feature_key(fname, num_cols, cat_cols)
             if parent_key not in parent_impacts:
                 parent_impacts[parent_key] = 0.0
             parent_impacts[parent_key] += float(impact)
@@ -195,7 +212,7 @@ def generate_structured_explanation(model, preprocessor, applicant_dict, thresho
 
         val_formatted = str(raw_val)
         if feat_key == 'credit_amount':
-            val_formatted = f"${float(raw_val):,.0f}"
+            val_formatted = f"{float(raw_val):,.0f}"
         elif feat_key == 'duration':
             val_formatted = f"{raw_val} months"
         elif feat_key == 'age':
@@ -226,9 +243,9 @@ def generate_structured_explanation(model, preprocessor, applicant_dict, thresho
 
     # Decision Summary Sentence
     if is_default:
-        summary_sentence = f"Rejected because the predicted default probability ({prob*100:.2f}%) is above the selected risk threshold ({threshold*100:.2f}%)."
+        summary_sentence = f"Rejected because the model-estimated default probability ({prob*100:.2f}%) is above the selected risk threshold ({threshold*100:.2f}%)."
     else:
-        summary_sentence = f"Approved because the predicted default probability ({prob*100:.2f}%) is below the selected risk threshold ({threshold*100:.2f}%)."
+        summary_sentence = f"Approved because the model-estimated default probability ({prob*100:.2f}%) is below the selected risk threshold ({threshold*100:.2f}%)."
 
     return {
         'error': False,

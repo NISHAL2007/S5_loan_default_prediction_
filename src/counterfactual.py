@@ -29,7 +29,7 @@ def generate_counterfactual_explanations(model, preprocessor, applicant_dict, th
         }
         
     candidates = [
-        {'feature': 'credit_amount', 'direction': -1, 'label': 'Credit Amount ($)'},
+        {'feature': 'credit_amount', 'direction': -1, 'label': 'Credit Amount'},
         {'feature': 'duration', 'direction': -1, 'label': 'Loan Duration (Months)'},
         {'feature': 'age', 'direction': 1, 'label': 'Age (Years)'}
     ]

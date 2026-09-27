@@ -95,16 +95,16 @@ export default function StabilityLabPage() {
       {/* KPI Header */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-5 font-mono">
         <div className="bg-[#141417] border border-zinc-800/80 p-5 rounded-xl space-y-1">
-          <p className="text-xs text-zinc-400">Base Default Probability</p>
+          <p className="text-xs text-zinc-400">Base Model-Estimated Default Probability</p>
           <p className="text-2xl font-bold text-zinc-100 font-sans">
-            {(baseProb * 100).toFixed(2)}%
+            {Number.isFinite(baseProb) ? `${(baseProb * 100).toFixed(2)}%` : "N/A"}
           </p>
         </div>
 
         <div className="bg-[#141417] border border-zinc-800/80 p-5 rounded-xl space-y-1">
           <p className="text-xs text-zinc-400">Average Abs Shift (Δ)</p>
           <p className="text-2xl font-bold text-amber-400 font-sans">
-            {(avgShift * 100).toFixed(2)}%
+            {Number.isFinite(avgShift) ? `${(avgShift * 100).toFixed(2)}%` : "N/A"}
           </p>
         </div>
 
@@ -116,14 +116,21 @@ export default function StabilityLabPage() {
             : 'bg-rose-950/30 border-rose-800/80 text-rose-300'
         }`}>
           <div className="flex items-center justify-between text-xs">
-            <span>Project-Level Stability Indicator</span>
+            <span>Project Stability Score</span>
             <FlaskConical className="w-4 h-4" />
           </div>
           <p className="text-2xl font-bold font-sans">
-            {score.toFixed(2)} / 100
+            {Number.isFinite(score) ? `${score.toFixed(2)} / 100` : "N/A"}
           </p>
           <p className="text-[11px] font-semibold uppercase">{classification}</p>
         </div>
+      </div>
+
+      <div className="p-4 bg-[#141417] border border-zinc-800/80 rounded-xl font-mono text-xs text-zinc-300 space-y-1">
+        <p className="text-amber-400 font-semibold">Note on Project Stability Score:</p>
+        <p>
+          This project-defined score summarizes average absolute probability change under the tested perturbations.
+        </p>
       </div>
 
       {/* Response Chart & Table */}

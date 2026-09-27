@@ -93,7 +93,7 @@ export default function RiskAssessmentPage() {
           </div>
 
           <div className="space-y-1">
-            <label className="text-zinc-400">Credit Amount ($)</label>
+            <label className="text-zinc-400">Credit Amount</label>
             <input
               type="number"
               value={applicant.credit_amount || 2500}
