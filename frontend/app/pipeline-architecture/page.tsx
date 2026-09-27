@@ -351,7 +351,7 @@ export default function PipelineArchitecturePage() {
           ) : stressData && Array.isArray(stressData.stress_matrix) ? (
             <div className="space-y-2">
               <p className="text-[11px] text-zinc-400">
-                Simulates simultaneous <strong>Credit Amount ($\pm 20\%$)</strong> and <strong>Loan Duration ($\pm 20\%$)</strong> shocks:
+                Simulates simultaneous <strong>Credit Amount (±20%)</strong> and <strong>Loan Duration (±20%)</strong> shocks:
               </p>
               <div className="grid grid-cols-3 gap-2 text-center">
                 {stressData.stress_matrix.map((cell: any, idx: number) => (
