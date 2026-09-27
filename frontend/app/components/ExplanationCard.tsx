@@ -109,14 +109,37 @@ export default function ExplanationCard({ explanation }: ExplanationProps) {
         <p className="text-zinc-300 font-sans">
           {explanation.summary_sentence || (
             isDefault 
-              ? `Rejected because the predicted default probability (${probPct}%) is above the selected risk threshold (${threshPct}%).`
-              : `Approved because the predicted default probability (${probPct}%) is below the selected risk threshold (${threshPct}%).`
+              ? `Rejected because the model-estimated default probability (${probPct}%) is above the selected risk threshold (${threshPct}%).`
+              : `Approved because the model-estimated default probability (${probPct}%) is below the selected risk threshold (${threshPct}%).`
           )}
         </p>
         <div className="mt-3 pt-3 border-t border-zinc-800/60 flex flex-wrap items-center justify-between gap-2 text-[11px] text-zinc-400 font-mono">
-          <span>Predicted Risk: <strong className="text-amber-400">{probPct}%</strong></span>
-          <span>Decision Threshold: <strong className="text-zinc-200">{threshPct}%</strong></span>
+          <span>Model-estimated default probability: <strong className="text-amber-400">{probPct}%</strong></span>
+          <span>Decision threshold: <strong className="text-zinc-200">{threshPct}%</strong></span>
           <span>Margin: <strong className={isDefault ? 'text-rose-400' : 'text-emerald-400'}>{isDefault ? '+' : '-'}{marginPct} percentage points</strong></span>
+        </div>
+      </div>
+
+      {/* Goal 7: Visual Decision Logic Flow */}
+      <div className="bg-zinc-900/90 border border-zinc-800 p-4 rounded-xl space-y-3 font-mono">
+        <h3 className="text-xs font-bold text-zinc-300 uppercase tracking-wider flex items-center space-x-2">
+          <Info className="w-4 h-4 text-amber-400" />
+          <span>Decision Logic Flow</span>
+        </h3>
+        <div className="flex flex-col md:flex-row items-center justify-center gap-3 py-2 text-center text-xs font-bold">
+          <div className="bg-zinc-950 border border-zinc-800 px-4 py-2 rounded-lg text-amber-400">
+            {probPct}% {isDefault ? '≥' : '<'} {threshPct}%
+          </div>
+          <span className="text-zinc-500 font-sans text-lg">↓</span>
+          <div className={`px-4 py-2 rounded-lg border uppercase tracking-wider ${
+            isDefault ? 'bg-rose-950/80 border-rose-800 text-rose-300' : 'bg-emerald-950/80 border-emerald-800 text-emerald-300'
+          }`}>
+            {isDefault ? 'REJECTED' : 'APPROVED'}
+          </div>
+          <span className="text-zinc-500 font-sans text-lg">↓</span>
+          <div className="bg-zinc-950 border border-zinc-800 px-4 py-2 rounded-lg text-amber-400">
+            {explanation.risk_tier || (prob < 0.35 ? 'LOW RISK' : prob < 0.55 ? 'MEDIUM RISK' : 'HIGH RISK')}
+          </div>
         </div>
       </div>
 
