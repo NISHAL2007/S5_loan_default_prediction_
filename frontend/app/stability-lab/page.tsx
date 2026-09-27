@@ -8,20 +8,19 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 
 const DEFAULT_STABILITY_DATA = {
   base_probability: 0.4066,
   average_abs_change: 0.0032,
-  stability_score: 99.68,
+  stability_score: 99.63,
   classification: "Highly Stable",
   baseline_probability: 0.4066,
   max_prob_diff: 0.0032,
-  project_stability_score: 99.68,
+  project_stability_score: 99.63,
   stability_label: "Highly Stable",
   perturbation_table: [
-    { Scenario: "Baseline", "Credit Amount ($)": 1913, "Duration (m)": 18, "Age (y)": 36, "Predicted Risk": "40.66%", "Probability Difference": 0 },
-    { Scenario: "Credit -5%", "Credit Amount ($)": 1817, "Duration (m)": 18, "Age (y)": 36, "Predicted Risk": "40.42%", "Probability Difference": -0.0024 },
-    { Scenario: "Credit +5%", "Credit Amount ($)": 2009, "Duration (m)": 18, "Age (y)": 36, "Predicted Risk": "40.91%", "Probability Difference": 0.0025 },
-    { Scenario: "Duration -5%", "Credit Amount ($)": 1913, "Duration (m)": 17, "Age (y)": 36, "Predicted Risk": "40.35%", "Probability Difference": -0.0031 },
-    { Scenario: "Duration +5%", "Credit Amount ($)": 1913, "Duration (m)": 19, "Age (y)": 36, "Predicted Risk": "40.98%", "Probability Difference": 0.0032 },
-    { Scenario: "Age -5%", "Credit Amount ($)": 1913, "Duration (m)": 18, "Age (y)": 34, "Predicted Risk": "40.71%", "Probability Difference": 0.0005 },
-    { Scenario: "Age +5%", "Credit Amount ($)": 1913, "Duration (m)": 18, "Age (y)": 38, "Predicted Risk": "40.61%", "Probability Difference": -0.0005 }
+    { Scenario: "credit_amount (-5%)", "Original Value": 1913, "New Value": 1817.35, "Original Default Prob": 0.4066, "New Default Prob": 0.4034, "Probability Difference": -0.0032 },
+    { Scenario: "credit_amount (+5%)", "Original Value": 1913, "New Value": 2008.65, "Original Default Prob": 0.4066, "New Default Prob": 0.4098, "Probability Difference": 0.0032 },
+    { Scenario: "duration (-5%)", "Original Value": 18, "New Value": 17.10, "Original Default Prob": 0.4066, "New Default Prob": 0.4035, "Probability Difference": -0.0031 },
+    { Scenario: "duration (+5%)", "Original Value": 18, "New Value": 18.90, "Original Default Prob": 0.4066, "New Default Prob": 0.4098, "Probability Difference": 0.0032 },
+    { Scenario: "age (-5%)", "Original Value": 36, "New Value": 34.20, "Original Default Prob": 0.4066, "New Default Prob": 0.4071, "Probability Difference": 0.0005 },
+    { Scenario: "age (+5%)", "Original Value": 36, "New Value": 37.80, "Original Default Prob": 0.4066, "New Default Prob": 0.4061, "Probability Difference": -0.0005 }
   ]
 };
 

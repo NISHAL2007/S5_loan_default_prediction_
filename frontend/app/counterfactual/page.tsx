@@ -5,39 +5,37 @@ import { fetchCounterfactual, fetchSampleApplicants } from '@/lib/api';
 import { Workflow, ArrowRight, CheckCircle2, Info, AlertTriangle } from 'lucide-react';
 
 const DEFAULT_COUNTERFACTUAL_DATA = {
-  baseline_probability: 0.781,
-  decision_threshold: 0.50,
-  single_feature_recourses: [
+  original_prob: 0.7813,
+  original_decision: "Default",
+  threshold: 0.50,
+  status: "Recourse found",
+  citation: "Based on counterfactual explanations (Wachter et al., 2017) using single/dual feature parameter search.",
+  counterfactuals: [
     {
-      feature_changed: "savings_status",
-      original_value: "<100",
-      counterfactual_value: ">=1000",
-      new_probability: 0.442,
-      probability_reduction: 0.339,
-      status: "APPROVED"
+      type: "Single Feature",
+      feature: "savings_status",
+      feature_label: "Savings Account Status",
+      pct_change: -100,
+      original_value: "savings_status: <100",
+      new_value: "savings_status: >=1000",
+      original_prob: 0.7813,
+      new_prob: 0.4420,
+      flipped: true,
+      summary: "Increasing Savings Account Status to >=1000 reduces default risk from 78.1% to 44.2% (Flips decision to APPROVED)."
     },
     {
-      feature_changed: "checking_status",
-      original_value: "<0",
-      counterfactual_value: ">=200",
-      new_probability: 0.418,
-      probability_reduction: 0.363,
-      status: "APPROVED"
+      type: "Dual Feature",
+      feature: "credit_amount + duration",
+      feature_label: "Credit Amount & Loan Duration",
+      pct_change: 25,
+      original_value: "Credit: $4,870, Duration: 24m",
+      new_value: "Credit: $3,652, Duration: 18m",
+      original_prob: 0.7813,
+      new_prob: 0.4180,
+      flipped: true,
+      summary: "Jointly reducing Credit Amount and Loan Duration by 25.0% reduces default probability from 78.1% to 41.8% (Flips decision to APPROVED)."
     }
-  ],
-  dual_feature_recourses: [
-    {
-      features_changed: ["duration", "savings_status"],
-      changes: {
-        duration: { original: 48, counterfactual: 24 },
-        savings_status: { original: "<100", counterfactual: "500<=X<1000" }
-      },
-      new_probability: 0.389,
-      probability_reduction: 0.392,
-      status: "APPROVED"
-    }
-  ],
-  academic_citation: "Wachter et al. (2017) Counterfactual Explanations Without Opening the Black Box"
+  ]
 };
 
 export default function CounterfactualPage() {
@@ -94,10 +92,25 @@ export default function CounterfactualPage() {
     );
   }
 
-  if (error || !data) {
+  if (
+    error || 
+    !data || 
+    data.original_prob === undefined || 
+    data.original_prob === null || 
+    isNaN(Number(data.original_prob)) || 
+    data.threshold === undefined || 
+    data.threshold === null || 
+    isNaN(Number(data.threshold))
+  ) {
     return (
-      <div className="p-6 bg-rose-950/40 border border-rose-800/60 rounded-lg text-rose-300 font-mono text-sm">
-        Error computing counterfactual explanations: {error}.
+      <div className="p-6 bg-rose-950/40 border border-rose-800/60 rounded-lg text-rose-300 font-mono text-sm space-y-2">
+        <p className="font-bold flex items-center space-x-2">
+          <AlertTriangle className="w-4 h-4 text-rose-400" />
+          <span>Invalid Counterfactual Recourse Response State</span>
+        </p>
+        <p className="text-xs text-rose-200/80">
+          The engine received NaN or undefined numerical parameters (`original_prob` or `threshold`). Classification decisions are suppressed when risk probabilities are invalid.
+        </p>
       </div>
     );
   }
