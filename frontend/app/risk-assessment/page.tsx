@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { fetchSampleApplicants, predictRisk } from '@/lib/api';
 import sample30 from '../lib/sample_30_applicants.json';
 import { ShieldAlert, CheckCircle2, AlertTriangle, XCircle, Sliders } from 'lucide-react';
+import ExplanationCard from '../components/ExplanationCard';
 
 export default function RiskAssessmentPage() {
   const [samples, setSamples] = useState<any[]>(sample30);
@@ -265,6 +266,11 @@ export default function RiskAssessmentPage() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Why Was This Decision Made Explanation Card */}
+      {(result?.explanation || samples[selectedIdx]?.explanation) && (
+        <ExplanationCard explanation={result?.explanation || samples[selectedIdx]?.explanation} />
       )}
     </div>
   );

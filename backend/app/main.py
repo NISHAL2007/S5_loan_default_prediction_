@@ -98,18 +98,20 @@ def get_sample_applicants():
         trans = preprocessor.transform(pd.DataFrame([app_dict]))
         prob = float(model.predict_proba(trans)[0, 1])
         status_label = "REJECTED" if prob >= 0.50 else "APPROVED"
+        explanation = generate_structured_explanation(model, preprocessor, app_dict, threshold=0.50, X_train_trans=X_train_trans, feature_names=feature_names)
         samples.append({
             'index': idx,
             'applicant': app_dict,
             'default_prob': round(prob, 4),
             'status': status_label,
+            'explanation': explanation,
             'label': f"Applicant #{idx+1:02d} | Age {app_dict.get('age')} | ${app_dict.get('credit_amount'):,} ({app_dict.get('duration')}m) | P(Default): {prob*100:.1f}% [{status_label}]"
         })
     return samples
 
 @app.post("/predict")
 def predict_risk(data: BorrowerInput):
-    """Calculates default probability, risk tier, and threshold decision."""
+    """Calculates default probability, risk tier, threshold decision, and structured explanation."""
     applicant_df = pd.DataFrame([data.applicant])
     try:
         trans = preprocessor.transform(applicant_df)
@@ -117,7 +119,7 @@ def predict_risk(data: BorrowerInput):
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Prediction error: {str(e)}")
         
-    threshold = data.threshold or 0.50
+    threshold = data.threshold if data.threshold is not None else 0.50
     is_default = prob >= threshold
     
     if prob < 0.35:
@@ -130,6 +132,8 @@ def predict_risk(data: BorrowerInput):
         risk_tier = "High Risk Tier"
         color = "rose"
         
+    explanation = generate_structured_explanation(model, preprocessor, data.applicant, threshold=threshold, X_train_trans=X_train_trans, feature_names=feature_names)
+
     return {
         'default_probability': round(prob, 4),
         'decision': "REJECTED (High Risk)" if is_default else "APPROVED (Acceptable Risk)",
@@ -137,7 +141,8 @@ def predict_risk(data: BorrowerInput):
         'threshold_used': threshold,
         'risk_tier': risk_tier,
         'risk_color': color,
-        'model_name': best_model_name
+        'model_name': best_model_name,
+        'explanation': explanation
     }
 
 @app.post("/explain/global")

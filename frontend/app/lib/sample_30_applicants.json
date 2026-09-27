@@ -24,7 +24,72 @@
       "foreign_worker": "yes"
     },
     "default_prob": 0.4066,
-    "label": "Applicant 0 (Age: 36, Credit: $1913, Risk Prob: 40.7%)"
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.4066,
+      "probability_pct": 40.66,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "MEDIUM RISK",
+      "risk_tier_full": "Medium Risk Tier",
+      "risk_color": "amber",
+      "is_default": false,
+      "margin": 0.0934,
+      "margin_pct": 9.34,
+      "summary_sentence": "Approved because the predicted default probability (40.66%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "<1",
+          "raw_value": "<1",
+          "contribution": 0.3464,
+          "direction": "increases_risk",
+          "explanation": "Feature Employment Duration (<1) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "skilled",
+          "raw_value": "skilled",
+          "contribution": 0.0265,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (skilled) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "18 months",
+          "raw_value": 18,
+          "contribution": -0.0969,
+          "direction": "decreases_risk",
+          "explanation": "Shorter loan duration (18 months) limits total credit exposure time, lowering risk."
+        },
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "business",
+          "raw_value": "business",
+          "contribution": -0.0648,
+          "direction": "decreases_risk",
+          "explanation": "Feature Loan Purpose (business) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "own",
+          "raw_value": "own",
+          "contribution": -0.0534,
+          "direction": "decreases_risk",
+          "explanation": "Homeownership (own) demonstrates asset stability, contributing toward lower risk."
+        }
+      ]
+    },
+    "label": "Applicant #01 | Age 36 | $1,913 (18m) | Risk Prob: 40.7% [APPROVED]"
   },
   {
     "index": 1,
@@ -51,7 +116,63 @@
       "foreign_worker": "yes"
     },
     "default_prob": 0.1867,
-    "label": "Applicant 1 (Age: 34, Credit: $1860, Risk Prob: 18.7%)"
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.1867,
+      "probability_pct": 18.67,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "LOW RISK",
+      "risk_tier_full": "Low Risk Tier",
+      "risk_color": "emerald",
+      "is_default": false,
+      "margin": 0.3133,
+      "margin_pct": 31.33,
+      "summary_sentence": "Approved because the predicted default probability (18.67%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "unemployed",
+          "raw_value": "unemployed",
+          "contribution": 0.428,
+          "direction": "increases_risk",
+          "explanation": "Feature Employment Duration (unemployed) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "used car",
+          "raw_value": "used car",
+          "contribution": -0.8417,
+          "direction": "decreases_risk",
+          "explanation": "Feature Loan Purpose (used car) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "12 months",
+          "raw_value": 12,
+          "contribution": -0.2519,
+          "direction": "decreases_risk",
+          "explanation": "Shorter loan duration (12 months) limits total credit exposure time, lowering risk."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "high qualif/self emp/mgmt",
+          "raw_value": "high qualif/self emp/mgmt",
+          "contribution": -0.0675,
+          "direction": "decreases_risk",
+          "explanation": "Feature Job Qualification Tier (high qualif/self emp/mgmt) contributes toward lower estimated default risk."
+        }
+      ]
+    },
+    "label": "Applicant #02 | Age 34 | $1,860 (12m) | Risk Prob: 18.7% [APPROVED]"
   },
   {
     "index": 2,
@@ -78,7 +199,81 @@
       "foreign_worker": "yes"
     },
     "default_prob": 0.7813,
-    "label": "Applicant 2 (Age: 48, Credit: $1024, Risk Prob: 78.1%)"
+    "status": "REJECTED",
+    "explanation": {
+      "error": false,
+      "probability": 0.7813,
+      "probability_pct": 78.13,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "REJECTED",
+      "risk_tier": "HIGH RISK",
+      "risk_tier_full": "High Risk Tier",
+      "risk_color": "rose",
+      "is_default": true,
+      "margin": 0.2813,
+      "margin_pct": 28.13,
+      "summary_sentence": "Rejected because the predicted default probability (78.13%) is above the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "<1",
+          "raw_value": "<1",
+          "contribution": 0.3464,
+          "direction": "increases_risk",
+          "explanation": "Feature Employment Duration (<1) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "24 months",
+          "raw_value": 24,
+          "contribution": 0.0581,
+          "direction": "increases_risk",
+          "explanation": "Extended loan repayment duration (24 months) increases credit risk exposure over time."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "skilled",
+          "raw_value": "skilled",
+          "contribution": 0.0265,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (skilled) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "radio/tv",
+          "raw_value": "radio/tv",
+          "contribution": -0.1834,
+          "direction": "decreases_risk",
+          "explanation": "Feature Loan Purpose (radio/tv) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "48 years",
+          "raw_value": 48,
+          "contribution": -0.0744,
+          "direction": "decreases_risk",
+          "explanation": "Borrower age (48 years) provides financial maturity, contributing toward lower risk."
+        },
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "own",
+          "raw_value": "own",
+          "contribution": -0.0534,
+          "direction": "decreases_risk",
+          "explanation": "Homeownership (own) demonstrates asset stability, contributing toward lower risk."
+        }
+      ]
+    },
+    "label": "Applicant #03 | Age 48 | $1,024 (24m) | Risk Prob: 78.1% [REJECTED]"
   },
   {
     "index": 3,
@@ -104,35 +299,174 @@
       "own_telephone": "yes",
       "foreign_worker": "yes"
     },
-    "default_prob": 0.7161,
-    "label": "Applicant 3 (Age: 31, Credit: $3104, Risk Prob: 71.6%)"
+    "default_prob": 0.7157,
+    "status": "REJECTED",
+    "explanation": {
+      "error": false,
+      "probability": 0.7157,
+      "probability_pct": 71.57,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "REJECTED",
+      "risk_tier": "HIGH RISK",
+      "risk_tier_full": "High Risk Tier",
+      "risk_color": "rose",
+      "is_default": true,
+      "margin": 0.2157,
+      "margin_pct": 21.57,
+      "summary_sentence": "Rejected because the predicted default probability (71.57%) is above the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "skilled",
+          "raw_value": "skilled",
+          "contribution": 0.0265,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (skilled) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "31 years",
+          "raw_value": 31,
+          "contribution": 0.0169,
+          "direction": "increases_risk",
+          "explanation": "Feature Borrower Age (31 years) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "4<=X<7",
+          "raw_value": "4<=X<7",
+          "contribution": -0.5348,
+          "direction": "decreases_risk",
+          "explanation": "Feature Employment Duration (4<=X<7) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "18 months",
+          "raw_value": 18,
+          "contribution": -0.0969,
+          "direction": "decreases_risk",
+          "explanation": "Shorter loan duration (18 months) limits total credit exposure time, lowering risk."
+        },
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "business",
+          "raw_value": "business",
+          "contribution": -0.0648,
+          "direction": "decreases_risk",
+          "explanation": "Feature Loan Purpose (business) contributes toward lower estimated default risk."
+        }
+      ]
+    },
+    "label": "Applicant #04 | Age 31 | $3,104 (18m) | Risk Prob: 71.6% [REJECTED]"
   },
   {
     "index": 4,
     "applicant": {
-      "checking_status": ">=200",
-      "duration": 36,
+      "checking_status": "0<=X<200",
+      "duration": 27,
       "credit_history": "critical/other existing credit",
       "purpose": "radio/tv",
       "credit_amount": 2520,
-      "savings_status": "quite rich",
+      "savings_status": "500<=X<1000",
       "employment": "1<=X<4",
-      "installment_commitment": 3,
+      "installment_commitment": 4,
       "personal_status": "male single",
       "other_parties": "none",
       "residence_since": 2,
-      "property_magnitude": "car",
+      "property_magnitude": "life insurance",
       "age": 23,
       "other_payment_plans": "none",
       "housing": "own",
       "existing_credits": 2,
-      "job": "skilled",
+      "job": "unskilled resident",
       "num_dependents": 1,
       "own_telephone": "none",
       "foreign_worker": "yes"
     },
-    "default_prob": 0.3096,
-    "label": "Applicant 4 (Age: 23, Credit: $2520, Risk Prob: 31.0%)"
+    "default_prob": 0.3102,
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.3102,
+      "probability_pct": 31.02,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "LOW RISK",
+      "risk_tier_full": "Low Risk Tier",
+      "risk_color": "emerald",
+      "is_default": false,
+      "margin": 0.1898,
+      "margin_pct": 18.98,
+      "summary_sentence": "Approved because the predicted default probability (31.02%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "27 months",
+          "raw_value": 27,
+          "contribution": 0.1356,
+          "direction": "increases_risk",
+          "explanation": "Extended loan repayment duration (27 months) increases credit risk exposure over time."
+        },
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "23 years",
+          "raw_value": 23,
+          "contribution": 0.0599,
+          "direction": "increases_risk",
+          "explanation": "Feature Borrower Age (23 years) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "unskilled resident",
+          "raw_value": "unskilled resident",
+          "contribution": 0.0372,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (unskilled resident) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "radio/tv",
+          "raw_value": "radio/tv",
+          "contribution": -0.1834,
+          "direction": "decreases_risk",
+          "explanation": "Feature Loan Purpose (radio/tv) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "own",
+          "raw_value": "own",
+          "contribution": -0.0534,
+          "direction": "decreases_risk",
+          "explanation": "Homeownership (own) demonstrates asset stability, contributing toward lower risk."
+        },
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "1<=X<4",
+          "raw_value": "1<=X<4",
+          "contribution": -0.0197,
+          "direction": "decreases_risk",
+          "explanation": "Feature Employment Duration (1<=X<4) contributes toward lower estimated default risk."
+        }
+      ]
+    },
+    "label": "Applicant #05 | Age 23 | $2,520 (27m) | Risk Prob: 31.0% [APPROVED]"
   },
   {
     "index": 5,
@@ -143,10 +477,10 @@
       "purpose": "radio/tv",
       "credit_amount": 882,
       "savings_status": "<100",
-      "employment": "unemployed",
+      "employment": "<1",
       "installment_commitment": 4,
       "personal_status": "male single",
-      "other_parties": "none",
+      "other_parties": "guarantor",
       "residence_since": 4,
       "property_magnitude": "real estate",
       "age": 23,
@@ -158,24 +492,98 @@
       "own_telephone": "none",
       "foreign_worker": "yes"
     },
-    "default_prob": 0.2223,
-    "label": "Applicant 5 (Age: 23, Credit: $882, Risk Prob: 22.2%)"
+    "default_prob": 0.2217,
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.2217,
+      "probability_pct": 22.17,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "LOW RISK",
+      "risk_tier_full": "Low Risk Tier",
+      "risk_color": "emerald",
+      "is_default": false,
+      "margin": 0.2783,
+      "margin_pct": 27.83,
+      "summary_sentence": "Approved because the predicted default probability (22.17%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "<1",
+          "raw_value": "<1",
+          "contribution": 0.3464,
+          "direction": "increases_risk",
+          "explanation": "Feature Employment Duration (<1) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "23 years",
+          "raw_value": 23,
+          "contribution": 0.0599,
+          "direction": "increases_risk",
+          "explanation": "Feature Borrower Age (23 years) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "skilled",
+          "raw_value": "skilled",
+          "contribution": 0.0265,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (skilled) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "13 months",
+          "raw_value": 13,
+          "contribution": -0.2261,
+          "direction": "decreases_risk",
+          "explanation": "Shorter loan duration (13 months) limits total credit exposure time, lowering risk."
+        },
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "radio/tv",
+          "raw_value": "radio/tv",
+          "contribution": -0.1834,
+          "direction": "decreases_risk",
+          "explanation": "Feature Loan Purpose (radio/tv) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "own",
+          "raw_value": "own",
+          "contribution": -0.0534,
+          "direction": "decreases_risk",
+          "explanation": "Homeownership (own) demonstrates asset stability, contributing toward lower risk."
+        }
+      ]
+    },
+    "label": "Applicant #06 | Age 23 | $882 (13m) | Risk Prob: 22.2% [APPROVED]"
   },
   {
     "index": 6,
     "applicant": {
-      "checking_status": "no checking",
+      "checking_status": "0<=X<200",
       "duration": 18,
-      "credit_history": "existing paid",
+      "credit_history": "critical/other existing credit",
       "purpose": "furniture/equipment",
       "credit_amount": 3612,
       "savings_status": "<100",
       "employment": ">=7",
-      "installment_commitment": 1,
+      "installment_commitment": 3,
       "personal_status": "female div/dep/mar",
       "other_parties": "none",
       "residence_since": 4,
-      "property_magnitude": "car",
+      "property_magnitude": "life insurance",
       "age": 37,
       "other_payment_plans": "none",
       "housing": "own",
@@ -185,35 +593,174 @@
       "own_telephone": "yes",
       "foreign_worker": "yes"
     },
-    "default_prob": 0.3842,
-    "label": "Applicant 6 (Age: 37, Credit: $3612, Risk Prob: 38.4%)"
+    "default_prob": 0.384,
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.384,
+      "probability_pct": 38.4,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "MEDIUM RISK",
+      "risk_tier_full": "Medium Risk Tier",
+      "risk_color": "amber",
+      "is_default": false,
+      "margin": 0.116,
+      "margin_pct": 11.6,
+      "summary_sentence": "Approved because the predicted default probability (38.40%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "furniture/equipment",
+          "raw_value": "furniture/equipment",
+          "contribution": 0.1313,
+          "direction": "increases_risk",
+          "explanation": "Feature Loan Purpose (furniture/equipment) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "skilled",
+          "raw_value": "skilled",
+          "contribution": 0.0265,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (skilled) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "18 months",
+          "raw_value": 18,
+          "contribution": -0.0969,
+          "direction": "decreases_risk",
+          "explanation": "Shorter loan duration (18 months) limits total credit exposure time, lowering risk."
+        },
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "own",
+          "raw_value": "own",
+          "contribution": -0.0534,
+          "direction": "decreases_risk",
+          "explanation": "Homeownership (own) demonstrates asset stability, contributing toward lower risk."
+        },
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "37 years",
+          "raw_value": 37,
+          "contribution": -0.0153,
+          "direction": "decreases_risk",
+          "explanation": "Borrower age (37 years) provides financial maturity, contributing toward lower risk."
+        }
+      ]
+    },
+    "label": "Applicant #07 | Age 37 | $3,612 (18m) | Risk Prob: 38.4% [APPROVED]"
   },
   {
     "index": 7,
     "applicant": {
       "checking_status": "<0",
       "duration": 6,
-      "credit_history": "critical/other existing credit",
-      "purpose": "new car",
+      "credit_history": "existing paid",
+      "purpose": "used car",
       "credit_amount": 1352,
-      "savings_status": "quite rich",
+      "savings_status": "500<=X<1000",
       "employment": "unemployed",
-      "installment_commitment": 3,
+      "installment_commitment": 1,
       "personal_status": "female div/dep/mar",
       "other_parties": "none",
       "residence_since": 2,
-      "property_magnitude": "car",
+      "property_magnitude": "life insurance",
       "age": 23,
       "other_payment_plans": "none",
       "housing": "rent",
-      "existing_credits": 2,
+      "existing_credits": 1,
       "job": "unemp/unskilled non res",
       "num_dependents": 1,
       "own_telephone": "yes",
       "foreign_worker": "yes"
     },
-    "default_prob": 0.1983,
-    "label": "Applicant 7 (Age: 23, Credit: $1352, Risk Prob: 19.8%)"
+    "default_prob": 0.1976,
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.1976,
+      "probability_pct": 19.76,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "LOW RISK",
+      "risk_tier_full": "Low Risk Tier",
+      "risk_color": "emerald",
+      "is_default": false,
+      "margin": 0.3024,
+      "margin_pct": 30.24,
+      "summary_sentence": "Approved because the predicted default probability (19.76%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "rent",
+          "raw_value": "rent",
+          "contribution": 0.4447,
+          "direction": "increases_risk",
+          "explanation": "Housing status (rent) contributes to estimated risk relative to homeownership."
+        },
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "unemployed",
+          "raw_value": "unemployed",
+          "contribution": 0.428,
+          "direction": "increases_risk",
+          "explanation": "Feature Employment Duration (unemployed) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "23 years",
+          "raw_value": 23,
+          "contribution": 0.0599,
+          "direction": "increases_risk",
+          "explanation": "Feature Borrower Age (23 years) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "used car",
+          "raw_value": "used car",
+          "contribution": -0.8417,
+          "direction": "decreases_risk",
+          "explanation": "Feature Loan Purpose (used car) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "unemp/unskilled non res",
+          "raw_value": "unemp/unskilled non res",
+          "contribution": -0.4091,
+          "direction": "decreases_risk",
+          "explanation": "Feature Job Qualification Tier (unemp/unskilled non res) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "6 months",
+          "raw_value": 6,
+          "contribution": -0.4069,
+          "direction": "decreases_risk",
+          "explanation": "Shorter loan duration (6 months) limits total credit exposure time, lowering risk."
+        }
+      ]
+    },
+    "label": "Applicant #08 | Age 23 | $1,352 (6m) | Risk Prob: 19.8% [APPROVED]"
   },
   {
     "index": 8,
@@ -229,7 +776,7 @@
       "personal_status": "male single",
       "other_parties": "none",
       "residence_since": 3,
-      "property_magnitude": "no known property",
+      "property_magnitude": "real estate",
       "age": 28,
       "other_payment_plans": "none",
       "housing": "rent",
@@ -239,19 +786,93 @@
       "own_telephone": "none",
       "foreign_worker": "yes"
     },
-    "default_prob": 0.6703,
-    "label": "Applicant 8 (Age: 28, Credit: $6260, Risk Prob: 67.0%)"
+    "default_prob": 0.6698,
+    "status": "REJECTED",
+    "explanation": {
+      "error": false,
+      "probability": 0.6698,
+      "probability_pct": 66.98,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "REJECTED",
+      "risk_tier": "HIGH RISK",
+      "risk_tier_full": "High Risk Tier",
+      "risk_color": "rose",
+      "is_default": true,
+      "margin": 0.1698,
+      "margin_pct": 16.98,
+      "summary_sentence": "Rejected because the predicted default probability (66.98%) is above the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "new car",
+          "raw_value": "new car",
+          "contribution": 0.5339,
+          "direction": "increases_risk",
+          "explanation": "Feature Loan Purpose (new car) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "rent",
+          "raw_value": "rent",
+          "contribution": 0.4447,
+          "direction": "increases_risk",
+          "explanation": "Housing status (rent) contributes to estimated risk relative to homeownership."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "unskilled resident",
+          "raw_value": "unskilled resident",
+          "contribution": 0.0372,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (unskilled resident) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "28 years",
+          "raw_value": 28,
+          "contribution": 0.0331,
+          "direction": "increases_risk",
+          "explanation": "Feature Borrower Age (28 years) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "4<=X<7",
+          "raw_value": "4<=X<7",
+          "contribution": -0.5348,
+          "direction": "decreases_risk",
+          "explanation": "Feature Employment Duration (4<=X<7) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "18 months",
+          "raw_value": 18,
+          "contribution": -0.0969,
+          "direction": "decreases_risk",
+          "explanation": "Shorter loan duration (18 months) limits total credit exposure time, lowering risk."
+        }
+      ]
+    },
+    "label": "Applicant #09 | Age 28 | $6,260 (18m) | Risk Prob: 67.0% [REJECTED]"
   },
   {
     "index": 9,
     "applicant": {
-      "checking_status": "no checking",
-      "duration": 10,
-      "credit_history": "existing paid",
-      "purpose": "education",
+      "checking_status": "0<=X<200",
+      "duration": 11,
+      "credit_history": "critical/other existing credit",
+      "purpose": "new car",
       "credit_amount": 1322,
-      "savings_status": "500<=X<1000",
-      "employment": ">=7",
+      "savings_status": ">=1000",
+      "employment": "1<=X<4",
       "installment_commitment": 4,
       "personal_status": "female div/dep/mar",
       "other_parties": "none",
@@ -263,28 +884,93 @@
       "existing_credits": 2,
       "job": "skilled",
       "num_dependents": 1,
-      "own_telephone": "yes",
+      "own_telephone": "none",
       "foreign_worker": "yes"
     },
-    "default_prob": 0.2798,
-    "label": "Applicant 9 (Age: 40, Credit: $1322, Risk Prob: 28.0%)"
+    "default_prob": 0.2802,
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.2802,
+      "probability_pct": 28.02,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "LOW RISK",
+      "risk_tier_full": "Low Risk Tier",
+      "risk_color": "emerald",
+      "is_default": false,
+      "margin": 0.2198,
+      "margin_pct": 21.98,
+      "summary_sentence": "Approved because the predicted default probability (28.02%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "new car",
+          "raw_value": "new car",
+          "contribution": 0.5339,
+          "direction": "increases_risk",
+          "explanation": "Feature Loan Purpose (new car) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "skilled",
+          "raw_value": "skilled",
+          "contribution": 0.0265,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (skilled) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "11 months",
+          "raw_value": 11,
+          "contribution": -0.2777,
+          "direction": "decreases_risk",
+          "explanation": "Shorter loan duration (11 months) limits total credit exposure time, lowering risk."
+        },
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "own",
+          "raw_value": "own",
+          "contribution": -0.0534,
+          "direction": "decreases_risk",
+          "explanation": "Homeownership (own) demonstrates asset stability, contributing toward lower risk."
+        },
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "40 years",
+          "raw_value": 40,
+          "contribution": -0.0314,
+          "direction": "decreases_risk",
+          "explanation": "Borrower age (40 years) provides financial maturity, contributing toward lower risk."
+        }
+      ]
+    },
+    "label": "Applicant #10 | Age 40 | $1,322 (11m) | Risk Prob: 28.0% [APPROVED]"
   },
   {
     "index": 10,
     "applicant": {
-      "checking_status": "<0",
-      "duration": 12,
-      "credit_history": "critical/other existing credit",
+      "checking_status": "no checking",
+      "duration": 36,
+      "credit_history": "existing paid",
       "purpose": "radio/tv",
-      "credit_amount": 1158,
-      "savings_status": "quite rich",
-      "employment": "1<=X<4",
-      "installment_commitment": 3,
+      "credit_amount": 2299,
+      "savings_status": "500<=X<1000",
+      "employment": ">=7",
+      "installment_commitment": 4,
       "personal_status": "male single",
       "other_parties": "none",
-      "residence_since": 1,
-      "property_magnitude": "real estate",
-      "age": 26,
+      "residence_since": 4,
+      "property_magnitude": "car",
+      "age": 39,
       "other_payment_plans": "none",
       "housing": "own",
       "existing_credits": 1,
@@ -293,295 +979,265 @@
       "own_telephone": "none",
       "foreign_worker": "yes"
     },
-    "default_prob": 0.3125,
-    "label": "Applicant 10 (Age: 26, Credit: $1158, Risk Prob: 31.3%)"
+    "default_prob": 0.2237,
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.2237,
+      "probability_pct": 22.37,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "LOW RISK",
+      "risk_tier_full": "Low Risk Tier",
+      "risk_color": "emerald",
+      "is_default": false,
+      "margin": 0.2763,
+      "margin_pct": 27.63,
+      "summary_sentence": "Approved because the predicted default probability (22.37%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "36 months",
+          "raw_value": 36,
+          "contribution": 0.3682,
+          "direction": "increases_risk",
+          "explanation": "Extended loan repayment duration (36 months) increases credit risk exposure over time."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "skilled",
+          "raw_value": "skilled",
+          "contribution": 0.0265,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (skilled) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "radio/tv",
+          "raw_value": "radio/tv",
+          "contribution": -0.1834,
+          "direction": "decreases_risk",
+          "explanation": "Feature Loan Purpose (radio/tv) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "own",
+          "raw_value": "own",
+          "contribution": -0.0534,
+          "direction": "decreases_risk",
+          "explanation": "Homeownership (own) demonstrates asset stability, contributing toward lower risk."
+        },
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "39 years",
+          "raw_value": 39,
+          "contribution": -0.0261,
+          "direction": "decreases_risk",
+          "explanation": "Borrower age (39 years) provides financial maturity, contributing toward lower risk."
+        }
+      ]
+    },
+    "label": "Applicant #11 | Age 39 | $2,299 (36m) | Risk Prob: 22.4% [APPROVED]"
   },
   {
     "index": 11,
     "applicant": {
-      "checking_status": "no checking",
+      "checking_status": "<0",
       "duration": 12,
-      "credit_history": "existing paid",
-      "purpose": "radio/tv",
-      "credit_amount": 1567,
+      "credit_history": "critical/other existing credit",
+      "purpose": "new car",
+      "credit_amount": 4843,
       "savings_status": "<100",
-      "employment": "1<=X<4",
-      "installment_commitment": 1,
-      "personal_status": "female div/dep/mar",
-      "other_parties": "none",
+      "employment": ">=7",
+      "installment_commitment": 3,
+      "personal_status": "male single",
+      "other_parties": "co applicant",
       "residence_since": 4,
-      "property_magnitude={": "car",
-      "age": 22,
+      "property_magnitude": "life insurance",
+      "age": 43,
       "other_payment_plans": "none",
-      "housing": "own",
-      "existing_credits": 1,
+      "housing": "rent",
+      "existing_credits": 2,
       "job": "skilled",
       "num_dependents": 1,
-      "own_telephone": "none",
+      "own_telephone": "yes",
       "foreign_worker": "yes"
     },
-    "default_prob": 0.2411,
-    "label": "Applicant 11 (Age: 22, Credit: $1567, Risk Prob: 24.1%)"
+    "default_prob": 0.6824,
+    "status": "REJECTED",
+    "explanation": {
+      "error": false,
+      "probability": 0.6824,
+      "probability_pct": 68.24,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "REJECTED",
+      "risk_tier": "HIGH RISK",
+      "risk_tier_full": "High Risk Tier",
+      "risk_color": "rose",
+      "is_default": true,
+      "margin": 0.1824,
+      "margin_pct": 18.24,
+      "summary_sentence": "Rejected because the predicted default probability (68.24%) is above the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "new car",
+          "raw_value": "new car",
+          "contribution": 0.5339,
+          "direction": "increases_risk",
+          "explanation": "Feature Loan Purpose (new car) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "rent",
+          "raw_value": "rent",
+          "contribution": 0.4447,
+          "direction": "increases_risk",
+          "explanation": "Housing status (rent) contributes to estimated risk relative to homeownership."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "skilled",
+          "raw_value": "skilled",
+          "contribution": 0.0265,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (skilled) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "12 months",
+          "raw_value": 12,
+          "contribution": -0.2519,
+          "direction": "decreases_risk",
+          "explanation": "Shorter loan duration (12 months) limits total credit exposure time, lowering risk."
+        },
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "43 years",
+          "raw_value": 43,
+          "contribution": -0.0476,
+          "direction": "decreases_risk",
+          "explanation": "Borrower age (43 years) provides financial maturity, contributing toward lower risk."
+        }
+      ]
+    },
+    "label": "Applicant #12 | Age 43 | $4,843 (12m) | Risk Prob: 68.2% [REJECTED]"
   },
   {
     "index": 12,
     "applicant": {
-      "checking_status": "<0",
-      "duration": 24,
-      "credit_history": "delayed previously",
-      "purpose": "furniture/equipment",
-      "credit_amount": 5371,
-      "savings_status": "<100",
-      "employment": "1<=X<4",
-      "installment_commitment": 3,
-      "personal_status": "male single",
-      "other_parties": "none",
-      "residence_since": 4,
-      "property_magnitude": "car",
-      "age": 28,
-      "other_payment_plans": "none",
-      "housing": "own",
-      "existing_credits": 1,
-      "job": "skilled",
-      "num_dependents": 1,
-      "own_telephone": "none",
-      "foreign_worker": "yes"
-    },
-    "default_prob": 0.7412,
-    "label": "Applicant 12 (Age: 28, Credit: $5371, Risk Prob: 74.1%)"
-  },
-  {
-    "index": 13,
-    "applicant": {
-      "checking_status": "0<=X<200",
-      "duration": 27,
-      "credit_history": "existing paid",
-      "purpose": "radio/tv",
-      "credit_amount": 5965,
-      "savings_status": "<100",
-      "employment": "1<=X<4",
-      "installment_commitment": 1,
-      "personal_status": "male single",
-      "other_parties": "none",
-      "residence_since": 2,
-      "property_magnitude": "car",
-      "age": 30,
-      "other_payment_plans": "none",
-      "housing": "own",
-      "existing_credits": 1,
-      "job": "high qualif/self emp/mgmt",
-      "num_dependents": 1,
-      "own_telephone": "yes",
-      "foreign_worker": "yes"
-    },
-    "default_prob": 0.5834,
-    "label": "Applicant 13 (Age: 30, Credit: $5965, Risk Prob: 58.3%)"
-  },
-  {
-    "index": 14,
-    "applicant": {
-      "checking_status": "<0",
-      "duration": 12,
-      "credit_history": "existing paid",
-      "purpose": "furniture/equipment",
-      "credit_amount": 1602,
-      "savings_status": "<100",
-      "employment": "1<=X<4",
-      "installment_commitment": 3,
-      "personal_status": "male single",
-      "other_parties": "none",
-      "residence_since": 3,
-      "property_magnitude": "car",
-      "age": 30,
-      "other_payment_plans": "none",
-      "housing": "own",
-      "existing_credits": 1,
-      "job": "skilled",
-      "num_dependents": 1,
-      "own_telephone": "none",
-      "foreign_worker": "yes"
-    },
-    "default_prob": 0.4512,
-    "label": "Applicant 14 (Age: 30, Credit: $1602, Risk Prob: 45.1%)"
-  },
-  {
-    "index": 15,
-    "applicant": {
       "checking_status": "no checking",
-      "duration": 12,
-      "credit_history": "existing paid",
-      "purpose": "new car",
-      "credit_amount": 1403,
-      "savings_status": "<100",
-      "employment": "1<=X<4",
-      "installment_commitment": 2,
-      "personal_status": "female div/dep/mar",
-      "other_parties": "none",
-      "residence_since": 3,
-      "property_magnitude": "car",
-      "age": 28,
-      "other_payment_plans": "none",
-      "housing": "rent",
-      "existing_credits": 1,
-      "job": "skilled",
-      "num_dependents": 1,
-      "own_telephone": "none",
-      "foreign_worker": "yes"
-    },
-    "default_prob": 0.2851,
-    "label": "Applicant 15 (Age: 28, Credit: $1403, Risk Prob: 28.5%)"
-  },
-  {
-    "index": 16,
-    "applicant": {
-      "checking_status": "0<=X<200",
-      "duration": 36,
-      "credit_history": "critical/other existing credit",
-      "purpose": "business",
-      "credit_amount": 6887,
-      "savings_status": "<100",
-      "employment": "1<=X<4",
-      "installment_commitment": 4,
-      "personal_status": "male single",
-      "other_parties": "none",
-      "residence_since": 3,
-      "property_magnitude": "car",
-      "age": 29,
-      "other_payment_plans": "none",
-      "housing": "own",
-      "existing_credits": 1,
-      "job": "skilled",
-      "num_dependents": 1,
-      "own_telephone": "yes",
-      "foreign_worker": "yes"
-    },
-    "default_prob": 0.6214,
-    "label": "Applicant 16 (Age: 29, Credit: $6887, Risk Prob: 62.1%)"
-  },
-  {
-    "index": 17,
-    "applicant": {
-      "checking_status": "no checking",
-      "duration": 12,
+      "duration": 4,
       "credit_history": "critical/other existing credit",
       "purpose": "radio/tv",
-      "credit_amount": 2096,
+      "credit_amount": 1544,
       "savings_status": "<100",
       "employment": "4<=X<7",
       "installment_commitment": 2,
       "personal_status": "male single",
       "other_parties": "none",
-      "residence_since": 3,
+      "residence_since": 1,
       "property_magnitude": "real estate",
-      "age": 49,
+      "age": 42,
       "other_payment_plans": "none",
       "housing": "own",
-      "existing_credits": 1,
+      "existing_credits": 3,
       "job": "unskilled resident",
       "num_dependents": 2,
       "own_telephone": "none",
       "foreign_worker": "yes"
     },
-    "default_prob": 0.1512,
-    "label": "Applicant 17 (Age: 49, Credit: $2096, Risk Prob: 15.1%)"
+    "default_prob": 0.0358,
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.0358,
+      "probability_pct": 3.58,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "LOW RISK",
+      "risk_tier_full": "Low Risk Tier",
+      "risk_color": "emerald",
+      "is_default": false,
+      "margin": 0.4642,
+      "margin_pct": 46.42,
+      "summary_sentence": "Approved because the predicted default probability (3.58%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "unskilled resident",
+          "raw_value": "unskilled resident",
+          "contribution": 0.0372,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (unskilled resident) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "4<=X<7",
+          "raw_value": "4<=X<7",
+          "contribution": -0.5348,
+          "direction": "decreases_risk",
+          "explanation": "Feature Employment Duration (4<=X<7) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "4 months",
+          "raw_value": 4,
+          "contribution": -0.4586,
+          "direction": "decreases_risk",
+          "explanation": "Shorter loan duration (4 months) limits total credit exposure time, lowering risk."
+        },
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "radio/tv",
+          "raw_value": "radio/tv",
+          "contribution": -0.1834,
+          "direction": "decreases_risk",
+          "explanation": "Feature Loan Purpose (radio/tv) contributes toward lower estimated default risk."
+        }
+      ]
+    },
+    "label": "Applicant #13 | Age 42 | $1,544 (4m) | Risk Prob: 3.6% [APPROVED]"
   },
   {
-    "index": 18,
+    "index": 13,
     "applicant": {
-      "checking_status": "<0",
-      "duration": 24,
+      "checking_status": "no checking",
+      "duration": 27,
       "credit_history": "existing paid",
       "purpose": "new car",
-      "credit_amount": 4870,
+      "credit_amount": 2570,
       "savings_status": "<100",
       "employment": "1<=X<4",
       "installment_commitment": 3,
-      "personal_status": "male single",
-      "other_parties": "none",
-      "residence_since": 4,
-      "property_magnitude": "no known property",
-      "age": 53,
-      "other_payment_plans": "none",
-      "housing": "for free",
-      "existing_credits": 2,
-      "job": "skilled",
-      "num_dependents": 2,
-      "own_telephone": "none",
-      "foreign_worker": "yes"
-    },
-    "default_prob": 0.6923,
-    "label": "Applicant 18 (Age: 53, Credit: $4870, Risk Prob: 69.2%)"
-  },
-  {
-    "index": 19,
-    "applicant": {
-      "checking_status": "no checking",
-      "duration": 24,
-      "credit_history": "critical/other existing credit",
-      "purpose": "furniture/equipment",
-      "credit_amount": 2835,
-      "savings_status": "quite rich",
-      "employment": ">=7",
-      "installment_commitment": 3,
-      "personal_status": "male single",
-      "other_parties": "none",
-      "residence_since": 4,
-      "property_magnitude": "real estate",
-      "age": 53,
-      "other_payment_plans": "none",
-      "housing": "own",
-      "existing_credits": 1,
-      "job": "skilled",
-      "num_dependents": 1,
-      "own_telephone": "none",
-      "foreign_worker": "yes"
-    },
-    "default_prob": 0.1945,
-    "label": "Applicant 19 (Age: 53, Credit: $2835, Risk Prob: 19.5%)"
-  },
-  {
-    "index": 20,
-    "applicant": {
-      "checking_status": "0<=X<200",
-      "duration": 30,
-      "credit_history": "existing paid",
-      "purpose": "new car",
-      "credit_amount": 5234,
-      "savings_status": "<100",
-      "employment": "unemployed",
-      "installment_commitment": 4,
-      "personal_status": "male mar/wid",
-      "other_parties": "none",
-      "residence_since": 2,
-      "property_magnitude": "car",
-      "age": 28,
-      "other_payment_plans": "none",
-      "housing": "own",
-      "existing_credits": 2,
-      "job": "high qualif/self emp/mgmt",
-      "num_dependents": 1,
-      "own_telephone": "none",
-      "foreign_worker": "yes"
-    },
-    "default_prob": 0.7321,
-    "label": "Applicant 20 (Age: 28, Credit: $5234, Risk Prob: 73.2%)"
-  },
-  {
-    "index": 21,
-    "applicant": {
-      "checking_status": "<0",
-      "duration": 48,
-      "credit_history": "existing paid",
-      "purpose": "business",
-      "credit_amount": 4308,
-      "savings_status": "<100",
-      "employment": "<1",
-      "installment_commitment": 3,
       "personal_status": "female div/dep/mar",
       "other_parties": "none",
-      "residence_since": 4,
-      "property_magnitude": "life insurance",
-      "age": 24,
+      "residence_since": 3,
+      "property_magnitude": "real estate",
+      "age": 21,
       "other_payment_plans": "none",
       "housing": "rent",
       "existing_credits": 1,
@@ -590,35 +1246,901 @@
       "own_telephone": "none",
       "foreign_worker": "yes"
     },
-    "default_prob": 0.8124,
-    "label": "Applicant 21 (Age: 24, Credit: $4308, Risk Prob: 81.2%)"
+    "default_prob": 0.5827,
+    "status": "REJECTED",
+    "explanation": {
+      "error": false,
+      "probability": 0.5827,
+      "probability_pct": 58.27,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "REJECTED",
+      "risk_tier": "HIGH RISK",
+      "risk_tier_full": "High Risk Tier",
+      "risk_color": "rose",
+      "is_default": true,
+      "margin": 0.0827,
+      "margin_pct": 8.27,
+      "summary_sentence": "Rejected because the predicted default probability (58.27%) is above the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "new car",
+          "raw_value": "new car",
+          "contribution": 0.5339,
+          "direction": "increases_risk",
+          "explanation": "Feature Loan Purpose (new car) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "rent",
+          "raw_value": "rent",
+          "contribution": 0.4447,
+          "direction": "increases_risk",
+          "explanation": "Housing status (rent) contributes to estimated risk relative to homeownership."
+        },
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "27 months",
+          "raw_value": 27,
+          "contribution": 0.1356,
+          "direction": "increases_risk",
+          "explanation": "Extended loan repayment duration (27 months) increases credit risk exposure over time."
+        },
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "21 years",
+          "raw_value": 21,
+          "contribution": 0.0707,
+          "direction": "increases_risk",
+          "explanation": "Feature Borrower Age (21 years) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "skilled",
+          "raw_value": "skilled",
+          "contribution": 0.0265,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (skilled) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "1<=X<4",
+          "raw_value": "1<=X<4",
+          "contribution": -0.0197,
+          "direction": "decreases_risk",
+          "explanation": "Feature Employment Duration (1<=X<4) contributes toward lower estimated default risk."
+        }
+      ]
+    },
+    "label": "Applicant #14 | Age 21 | $2,570 (27m) | Risk Prob: 58.3% [REJECTED]"
   },
   {
-    "index": 22,
+    "index": 14,
+    "applicant": {
+      "checking_status": "<0",
+      "duration": 18,
+      "credit_history": "critical/other existing credit",
+      "purpose": "furniture/equipment",
+      "credit_amount": 2124,
+      "savings_status": "<100",
+      "employment": "1<=X<4",
+      "installment_commitment": 4,
+      "personal_status": "female div/dep/mar",
+      "other_parties": "none",
+      "residence_since": 4,
+      "property_magnitude": "real estate",
+      "age": 24,
+      "other_payment_plans": "none",
+      "housing": "rent",
+      "existing_credits": 2,
+      "job": "skilled",
+      "num_dependents": 1,
+      "own_telephone": "none",
+      "foreign_worker": "yes"
+    },
+    "default_prob": 0.7142,
+    "status": "REJECTED",
+    "explanation": {
+      "error": false,
+      "probability": 0.7142,
+      "probability_pct": 71.42,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "REJECTED",
+      "risk_tier": "HIGH RISK",
+      "risk_tier_full": "High Risk Tier",
+      "risk_color": "rose",
+      "is_default": true,
+      "margin": 0.2142,
+      "margin_pct": 21.42,
+      "summary_sentence": "Rejected because the predicted default probability (71.42%) is above the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "rent",
+          "raw_value": "rent",
+          "contribution": 0.4447,
+          "direction": "increases_risk",
+          "explanation": "Housing status (rent) contributes to estimated risk relative to homeownership."
+        },
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "furniture/equipment",
+          "raw_value": "furniture/equipment",
+          "contribution": 0.1313,
+          "direction": "increases_risk",
+          "explanation": "Feature Loan Purpose (furniture/equipment) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "24 years",
+          "raw_value": 24,
+          "contribution": 0.0546,
+          "direction": "increases_risk",
+          "explanation": "Feature Borrower Age (24 years) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "skilled",
+          "raw_value": "skilled",
+          "contribution": 0.0265,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (skilled) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "18 months",
+          "raw_value": 18,
+          "contribution": -0.0969,
+          "direction": "decreases_risk",
+          "explanation": "Shorter loan duration (18 months) limits total credit exposure time, lowering risk."
+        },
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "1<=X<4",
+          "raw_value": "1<=X<4",
+          "contribution": -0.0197,
+          "direction": "decreases_risk",
+          "explanation": "Feature Employment Duration (1<=X<4) contributes toward lower estimated default risk."
+        }
+      ]
+    },
+    "label": "Applicant #15 | Age 24 | $2,124 (18m) | Risk Prob: 71.4% [REJECTED]"
+  },
+  {
+    "index": 15,
     "applicant": {
       "checking_status": "no checking",
-      "duration": 24,
+      "duration": 5,
       "credit_history": "existing paid",
-      "purpose": "new car",
-      "credit_amount": 1199,
+      "purpose": "business",
+      "credit_amount": 3448,
       "savings_status": "<100",
-      "employment": ">=7",
-      "installment_commitment": 4,
+      "employment": "4<=X<7",
+      "installment_commitment": 1,
       "personal_status": "male single",
       "other_parties": "none",
       "residence_since": 4,
       "property_magnitude": "real estate",
-      "age": 60,
+      "age": 74,
       "other_payment_plans": "none",
       "housing": "own",
-      "existing_credits": 2,
+      "existing_credits": 1,
       "job": "unskilled resident",
       "num_dependents": 1,
       "own_telephone": "none",
       "foreign_worker": "yes"
     },
-    "default_prob": 0.2104,
-    "label": "Applicant 22 (Age: 60, Credit: $1199, Risk Prob: 21.0%)"
+    "default_prob": 0.0366,
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.0366,
+      "probability_pct": 3.66,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "LOW RISK",
+      "risk_tier_full": "Low Risk Tier",
+      "risk_color": "emerald",
+      "is_default": false,
+      "margin": 0.4634,
+      "margin_pct": 46.34,
+      "summary_sentence": "Approved because the predicted default probability (3.66%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "unskilled resident",
+          "raw_value": "unskilled resident",
+          "contribution": 0.0372,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (unskilled resident) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "4<=X<7",
+          "raw_value": "4<=X<7",
+          "contribution": -0.5348,
+          "direction": "decreases_risk",
+          "explanation": "Feature Employment Duration (4<=X<7) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "5 months",
+          "raw_value": 5,
+          "contribution": -0.4327,
+          "direction": "decreases_risk",
+          "explanation": "Shorter loan duration (5 months) limits total credit exposure time, lowering risk."
+        },
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "74 years",
+          "raw_value": 74,
+          "contribution": -0.2142,
+          "direction": "decreases_risk",
+          "explanation": "Borrower age (74 years) provides financial maturity, contributing toward lower risk."
+        }
+      ]
+    },
+    "label": "Applicant #16 | Age 74 | $3,448 (5m) | Risk Prob: 3.7% [APPROVED]"
+  },
+  {
+    "index": 16,
+    "applicant": {
+      "checking_status": "0<=X<200",
+      "duration": 16,
+      "credit_history": "critical/other existing credit",
+      "purpose": "new car",
+      "credit_amount": 1175,
+      "savings_status": "<100",
+      "employment": "unemployed",
+      "installment_commitment": 2,
+      "personal_status": "male single",
+      "other_parties": "none",
+      "residence_since": 3,
+      "property_magnitude": "car",
+      "age": 68,
+      "other_payment_plans": "none",
+      "housing": "for free",
+      "existing_credits": 3,
+      "job": "unemp/unskilled non res",
+      "num_dependents": 1,
+      "own_telephone": "yes",
+      "foreign_worker": "yes"
+    },
+    "default_prob": 0.1709,
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.1709,
+      "probability_pct": 17.09,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "LOW RISK",
+      "risk_tier_full": "Low Risk Tier",
+      "risk_color": "emerald",
+      "is_default": false,
+      "margin": 0.3291,
+      "margin_pct": 32.91,
+      "summary_sentence": "Approved because the predicted default probability (17.09%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "new car",
+          "raw_value": "new car",
+          "contribution": 0.5339,
+          "direction": "increases_risk",
+          "explanation": "Feature Loan Purpose (new car) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "unemployed",
+          "raw_value": "unemployed",
+          "contribution": 0.428,
+          "direction": "increases_risk",
+          "explanation": "Feature Employment Duration (unemployed) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "for free",
+          "raw_value": "for free",
+          "contribution": -0.5216,
+          "direction": "decreases_risk",
+          "explanation": "Homeownership (for free) demonstrates asset stability, contributing toward lower risk."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "unemp/unskilled non res",
+          "raw_value": "unemp/unskilled non res",
+          "contribution": -0.4091,
+          "direction": "decreases_risk",
+          "explanation": "Feature Job Qualification Tier (unemp/unskilled non res) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "68 years",
+          "raw_value": 68,
+          "contribution": -0.1819,
+          "direction": "decreases_risk",
+          "explanation": "Borrower age (68 years) provides financial maturity, contributing toward lower risk."
+        }
+      ]
+    },
+    "label": "Applicant #17 | Age 68 | $1,175 (16m) | Risk Prob: 17.1% [APPROVED]"
+  },
+  {
+    "index": 17,
+    "applicant": {
+      "checking_status": "no checking",
+      "duration": 11,
+      "credit_history": "critical/other existing credit",
+      "purpose": "radio/tv",
+      "credit_amount": 1154,
+      "savings_status": "100<=X<500",
+      "employment": "unemployed",
+      "installment_commitment": 4,
+      "personal_status": "female div/dep/mar",
+      "other_parties": "none",
+      "residence_since": 4,
+      "property_magnitude": "real estate",
+      "age": 57,
+      "other_payment_plans": "none",
+      "housing": "own",
+      "existing_credits": 3,
+      "job": "unskilled resident",
+      "num_dependents": 1,
+      "own_telephone": "none",
+      "foreign_worker": "yes"
+    },
+    "default_prob": 0.1536,
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.1536,
+      "probability_pct": 15.36,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "LOW RISK",
+      "risk_tier_full": "Low Risk Tier",
+      "risk_color": "emerald",
+      "is_default": false,
+      "margin": 0.3464,
+      "margin_pct": 34.64,
+      "summary_sentence": "Approved because the predicted default probability (15.36%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "unemployed",
+          "raw_value": "unemployed",
+          "contribution": 0.428,
+          "direction": "increases_risk",
+          "explanation": "Feature Employment Duration (unemployed) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "unskilled resident",
+          "raw_value": "unskilled resident",
+          "contribution": 0.0372,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (unskilled resident) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "11 months",
+          "raw_value": 11,
+          "contribution": -0.2777,
+          "direction": "decreases_risk",
+          "explanation": "Shorter loan duration (11 months) limits total credit exposure time, lowering risk."
+        },
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "radio/tv",
+          "raw_value": "radio/tv",
+          "contribution": -0.1834,
+          "direction": "decreases_risk",
+          "explanation": "Feature Loan Purpose (radio/tv) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "57 years",
+          "raw_value": 57,
+          "contribution": -0.1228,
+          "direction": "decreases_risk",
+          "explanation": "Borrower age (57 years) provides financial maturity, contributing toward lower risk."
+        }
+      ]
+    },
+    "label": "Applicant #18 | Age 57 | $1,154 (11m) | Risk Prob: 15.4% [APPROVED]"
+  },
+  {
+    "index": 18,
+    "applicant": {
+      "checking_status": "no checking",
+      "duration": 30,
+      "credit_history": "critical/other existing credit",
+      "purpose": "radio/tv",
+      "credit_amount": 5954,
+      "savings_status": "<100",
+      "employment": "4<=X<7",
+      "installment_commitment": 3,
+      "personal_status": "male single",
+      "other_parties": "co applicant",
+      "residence_since": 2,
+      "property_magnitude": "car",
+      "age": 38,
+      "other_payment_plans": "none",
+      "housing": "own",
+      "existing_credits": 1,
+      "job": "skilled",
+      "num_dependents": 1,
+      "own_telephone": "none",
+      "foreign_worker": "yes"
+    },
+    "default_prob": 0.1573,
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.1573,
+      "probability_pct": 15.73,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "LOW RISK",
+      "risk_tier_full": "Low Risk Tier",
+      "risk_color": "emerald",
+      "is_default": false,
+      "margin": 0.3427,
+      "margin_pct": 34.27,
+      "summary_sentence": "Approved because the predicted default probability (15.73%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "30 months",
+          "raw_value": 30,
+          "contribution": 0.2131,
+          "direction": "increases_risk",
+          "explanation": "Extended loan repayment duration (30 months) increases credit risk exposure over time."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "skilled",
+          "raw_value": "skilled",
+          "contribution": 0.0265,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (skilled) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "4<=X<7",
+          "raw_value": "4<=X<7",
+          "contribution": -0.5348,
+          "direction": "decreases_risk",
+          "explanation": "Feature Employment Duration (4<=X<7) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "radio/tv",
+          "raw_value": "radio/tv",
+          "contribution": -0.1834,
+          "direction": "decreases_risk",
+          "explanation": "Feature Loan Purpose (radio/tv) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "own",
+          "raw_value": "own",
+          "contribution": -0.0534,
+          "direction": "decreases_risk",
+          "explanation": "Homeownership (own) demonstrates asset stability, contributing toward lower risk."
+        }
+      ]
+    },
+    "label": "Applicant #19 | Age 38 | $5,954 (30m) | Risk Prob: 15.7% [APPROVED]"
+  },
+  {
+    "index": 19,
+    "applicant": {
+      "checking_status": "no checking",
+      "duration": 12,
+      "credit_history": "existing paid",
+      "purpose": "radio/tv",
+      "credit_amount": 2279,
+      "savings_status": "no known savings",
+      "employment": "1<=X<4",
+      "installment_commitment": 4,
+      "personal_status": "male single",
+      "other_parties": "none",
+      "residence_since": 4,
+      "property_magnitude": "no known property",
+      "age": 37,
+      "other_payment_plans": "none",
+      "housing": "for free",
+      "existing_credits": 1,
+      "job": "skilled",
+      "num_dependents": 1,
+      "own_telephone": "yes",
+      "foreign_worker": "yes"
+    },
+    "default_prob": 0.0834,
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.0834,
+      "probability_pct": 8.34,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "LOW RISK",
+      "risk_tier_full": "Low Risk Tier",
+      "risk_color": "emerald",
+      "is_default": false,
+      "margin": 0.4166,
+      "margin_pct": 41.66,
+      "summary_sentence": "Approved because the predicted default probability (8.34%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "skilled",
+          "raw_value": "skilled",
+          "contribution": 0.0265,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (skilled) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "for free",
+          "raw_value": "for free",
+          "contribution": -0.5216,
+          "direction": "decreases_risk",
+          "explanation": "Homeownership (for free) demonstrates asset stability, contributing toward lower risk."
+        },
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "12 months",
+          "raw_value": 12,
+          "contribution": -0.2519,
+          "direction": "decreases_risk",
+          "explanation": "Shorter loan duration (12 months) limits total credit exposure time, lowering risk."
+        },
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "radio/tv",
+          "raw_value": "radio/tv",
+          "contribution": -0.1834,
+          "direction": "decreases_risk",
+          "explanation": "Feature Loan Purpose (radio/tv) contributes toward lower estimated default risk."
+        }
+      ]
+    },
+    "label": "Applicant #20 | Age 37 | $2,279 (12m) | Risk Prob: 8.3% [APPROVED]"
+  },
+  {
+    "index": 20,
+    "applicant": {
+      "checking_status": "no checking",
+      "duration": 24,
+      "credit_history": "existing paid",
+      "purpose": "new car",
+      "credit_amount": 2255,
+      "savings_status": "no known savings",
+      "employment": "<1",
+      "installment_commitment": 4,
+      "personal_status": "male single",
+      "other_parties": "none",
+      "residence_since": 1,
+      "property_magnitude": "life insurance",
+      "age": 54,
+      "other_payment_plans": "none",
+      "housing": "own",
+      "existing_credits": 1,
+      "job": "skilled",
+      "num_dependents": 1,
+      "own_telephone": "none",
+      "foreign_worker": "yes"
+    },
+    "default_prob": 0.2575,
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.2575,
+      "probability_pct": 25.75,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "LOW RISK",
+      "risk_tier_full": "Low Risk Tier",
+      "risk_color": "emerald",
+      "is_default": false,
+      "margin": 0.2425,
+      "margin_pct": 24.25,
+      "summary_sentence": "Approved because the predicted default probability (25.75%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "new car",
+          "raw_value": "new car",
+          "contribution": 0.5339,
+          "direction": "increases_risk",
+          "explanation": "Feature Loan Purpose (new car) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "<1",
+          "raw_value": "<1",
+          "contribution": 0.3464,
+          "direction": "increases_risk",
+          "explanation": "Feature Employment Duration (<1) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "24 months",
+          "raw_value": 24,
+          "contribution": 0.0581,
+          "direction": "increases_risk",
+          "explanation": "Extended loan repayment duration (24 months) increases credit risk exposure over time."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "skilled",
+          "raw_value": "skilled",
+          "contribution": 0.0265,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (skilled) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "54 years",
+          "raw_value": 54,
+          "contribution": -0.1067,
+          "direction": "decreases_risk",
+          "explanation": "Borrower age (54 years) provides financial maturity, contributing toward lower risk."
+        },
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "own",
+          "raw_value": "own",
+          "contribution": -0.0534,
+          "direction": "decreases_risk",
+          "explanation": "Homeownership (own) demonstrates asset stability, contributing toward lower risk."
+        }
+      ]
+    },
+    "label": "Applicant #21 | Age 54 | $2,255 (24m) | Risk Prob: 25.7% [APPROVED]"
+  },
+  {
+    "index": 21,
+    "applicant": {
+      "checking_status": "no checking",
+      "duration": 36,
+      "credit_history": "existing paid",
+      "purpose": "radio/tv",
+      "credit_amount": 3595,
+      "savings_status": "<100",
+      "employment": ">=7",
+      "installment_commitment": 4,
+      "personal_status": "male single",
+      "other_parties": "none",
+      "residence_since": 2,
+      "property_magnitude": "car",
+      "age": 28,
+      "other_payment_plans": "none",
+      "housing": "own",
+      "existing_credits": 1,
+      "job": "skilled",
+      "num_dependents": 1,
+      "own_telephone": "none",
+      "foreign_worker": "yes"
+    },
+    "default_prob": 0.3767,
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.3767,
+      "probability_pct": 37.67,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "MEDIUM RISK",
+      "risk_tier_full": "Medium Risk Tier",
+      "risk_color": "amber",
+      "is_default": false,
+      "margin": 0.1233,
+      "margin_pct": 12.33,
+      "summary_sentence": "Approved because the predicted default probability (37.67%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "36 months",
+          "raw_value": 36,
+          "contribution": 0.3682,
+          "direction": "increases_risk",
+          "explanation": "Extended loan repayment duration (36 months) increases credit risk exposure over time."
+        },
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "28 years",
+          "raw_value": 28,
+          "contribution": 0.0331,
+          "direction": "increases_risk",
+          "explanation": "Feature Borrower Age (28 years) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "skilled",
+          "raw_value": "skilled",
+          "contribution": 0.0265,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (skilled) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "radio/tv",
+          "raw_value": "radio/tv",
+          "contribution": -0.1834,
+          "direction": "decreases_risk",
+          "explanation": "Feature Loan Purpose (radio/tv) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "own",
+          "raw_value": "own",
+          "contribution": -0.0534,
+          "direction": "decreases_risk",
+          "explanation": "Homeownership (own) demonstrates asset stability, contributing toward lower risk."
+        }
+      ]
+    },
+    "label": "Applicant #22 | Age 28 | $3,595 (36m) | Risk Prob: 37.7% [APPROVED]"
+  },
+  {
+    "index": 22,
+    "applicant": {
+      "checking_status": "no checking",
+      "duration": 12,
+      "credit_history": "critical/other existing credit",
+      "purpose": "business",
+      "credit_amount": 2292,
+      "savings_status": "<100",
+      "employment": "unemployed",
+      "installment_commitment": 4,
+      "personal_status": "male single",
+      "other_parties": "none",
+      "residence_since": 2,
+      "property_magnitude": "car",
+      "age": 42,
+      "other_payment_plans": "stores",
+      "housing": "own",
+      "existing_credits": 2,
+      "job": "high qualif/self emp/mgmt",
+      "num_dependents": 1,
+      "own_telephone": "yes",
+      "foreign_worker": "yes"
+    },
+    "default_prob": 0.1798,
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.1798,
+      "probability_pct": 17.98,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "LOW RISK",
+      "risk_tier_full": "Low Risk Tier",
+      "risk_color": "emerald",
+      "is_default": false,
+      "margin": 0.3202,
+      "margin_pct": 32.02,
+      "summary_sentence": "Approved because the predicted default probability (17.98%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "unemployed",
+          "raw_value": "unemployed",
+          "contribution": 0.428,
+          "direction": "increases_risk",
+          "explanation": "Feature Employment Duration (unemployed) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "12 months",
+          "raw_value": 12,
+          "contribution": -0.2519,
+          "direction": "decreases_risk",
+          "explanation": "Shorter loan duration (12 months) limits total credit exposure time, lowering risk."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "high qualif/self emp/mgmt",
+          "raw_value": "high qualif/self emp/mgmt",
+          "contribution": -0.0675,
+          "direction": "decreases_risk",
+          "explanation": "Feature Job Qualification Tier (high qualif/self emp/mgmt) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "business",
+          "raw_value": "business",
+          "contribution": -0.0648,
+          "direction": "decreases_risk",
+          "explanation": "Feature Loan Purpose (business) contributes toward lower estimated default risk."
+        }
+      ]
+    },
+    "label": "Applicant #23 | Age 42 | $2,292 (12m) | Risk Prob: 18.0% [APPROVED]"
   },
   {
     "index": 23,
@@ -626,152 +2148,384 @@
       "checking_status": "<0",
       "duration": 24,
       "credit_history": "existing paid",
-      "purpose": "radio/tv",
-      "credit_amount": 1282,
-      "savings_status": "100<=X<500",
-      "employment": "1<=X<4",
+      "purpose": "furniture/equipment",
+      "credit_amount": 3234,
+      "savings_status": "<100",
+      "employment": "<1",
       "installment_commitment": 4,
       "personal_status": "female div/dep/mar",
       "other_parties": "none",
-      "residence_since": 2,
-      "property_magnitude": "car",
-      "age": 32,
+      "residence_since": 4,
+      "property_magnitude": "real estate",
+      "age": 23,
       "other_payment_plans": "none",
-      "housing": "own",
+      "housing": "rent",
       "existing_credits": 1,
       "job": "unskilled resident",
       "num_dependents": 1,
-      "own_telephone": "none",
+      "own_telephone": "yes",
       "foreign_worker": "yes"
     },
-    "default_prob": 0.4215,
-    "label": "Applicant 23 (Age: 32, Credit: $1282, Risk Prob: 42.2%)"
+    "default_prob": 0.8684,
+    "status": "REJECTED",
+    "explanation": {
+      "error": false,
+      "probability": 0.8684,
+      "probability_pct": 86.84,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "REJECTED",
+      "risk_tier": "HIGH RISK",
+      "risk_tier_full": "High Risk Tier",
+      "risk_color": "rose",
+      "is_default": true,
+      "margin": 0.3684,
+      "margin_pct": 36.84,
+      "summary_sentence": "Rejected because the predicted default probability (86.84%) is above the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "rent",
+          "raw_value": "rent",
+          "contribution": 0.4447,
+          "direction": "increases_risk",
+          "explanation": "Housing status (rent) contributes to estimated risk relative to homeownership."
+        },
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "<1",
+          "raw_value": "<1",
+          "contribution": 0.3464,
+          "direction": "increases_risk",
+          "explanation": "Feature Employment Duration (<1) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "furniture/equipment",
+          "raw_value": "furniture/equipment",
+          "contribution": 0.1313,
+          "direction": "increases_risk",
+          "explanation": "Feature Loan Purpose (furniture/equipment) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "23 years",
+          "raw_value": 23,
+          "contribution": 0.0599,
+          "direction": "increases_risk",
+          "explanation": "Feature Borrower Age (23 years) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "24 months",
+          "raw_value": 24,
+          "contribution": 0.0581,
+          "direction": "increases_risk",
+          "explanation": "Extended loan repayment duration (24 months) increases credit risk exposure over time."
+        }
+      ],
+      "protective_factors": []
+    },
+    "label": "Applicant #24 | Age 23 | $3,234 (24m) | Risk Prob: 86.8% [REJECTED]"
   },
   {
     "index": 24,
     "applicant": {
-      "checking_status": "<0",
-      "duration": 30,
-      "credit_history": "existing paid",
-      "purpose": "business",
-      "credit_amount": 8072,
-      "savings_status": "no known savings",
-      "employment": "<1",
-      "installment_commitment": 2,
-      "personal_status": "male single",
-      "other_parties": "none",
-      "residence_since": 3,
-      "property_magnitude": "car",
-      "age": 25,
-      "other_payment_plans": "none",
-      "housing": "own",
-      "existing_credits": 1,
-      "job": "skilled",
+      "checking_status": "0<=X<200",
+      "duration": 18,
+      "credit_history": "critical/other existing credit",
+      "purpose": "radio/tv",
+      "credit_amount": 1795,
+      "savings_status": "<100",
+      "employment": ">=7",
+      "installment_commitment": 3,
+      "personal_status": "female div/dep/mar",
+      "other_parties": "guarantor",
+      "residence_since": 4,
+      "property_magnitude": "real estate",
+      "age": 48,
+      "other_payment_plans": "bank",
+      "housing": "rent",
+      "existing_credits": 2,
+      "job": "unskilled resident",
       "num_dependents": 1,
-      "own_telephone": "none",
+      "own_telephone": "yes",
       "foreign_worker": "yes"
     },
-    "default_prob": 0.7951,
-    "label": "Applicant 24 (Age: 25, Credit: $8072, Risk Prob: 79.5%)"
+    "default_prob": 0.4548,
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.4548,
+      "probability_pct": 45.48,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "MEDIUM RISK",
+      "risk_tier_full": "Medium Risk Tier",
+      "risk_color": "amber",
+      "is_default": false,
+      "margin": 0.0452,
+      "margin_pct": 4.52,
+      "summary_sentence": "Approved because the predicted default probability (45.48%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "rent",
+          "raw_value": "rent",
+          "contribution": 0.4447,
+          "direction": "increases_risk",
+          "explanation": "Housing status (rent) contributes to estimated risk relative to homeownership."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "unskilled resident",
+          "raw_value": "unskilled resident",
+          "contribution": 0.0372,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (unskilled resident) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "radio/tv",
+          "raw_value": "radio/tv",
+          "contribution": -0.1834,
+          "direction": "decreases_risk",
+          "explanation": "Feature Loan Purpose (radio/tv) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "18 months",
+          "raw_value": 18,
+          "contribution": -0.0969,
+          "direction": "decreases_risk",
+          "explanation": "Shorter loan duration (18 months) limits total credit exposure time, lowering risk."
+        },
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "48 years",
+          "raw_value": 48,
+          "contribution": -0.0744,
+          "direction": "decreases_risk",
+          "explanation": "Borrower age (48 years) provides financial maturity, contributing toward lower risk."
+        }
+      ]
+    },
+    "label": "Applicant #25 | Age 48 | $1,795 (18m) | Risk Prob: 45.5% [APPROVED]"
   },
   {
     "index": 25,
     "applicant": {
       "checking_status": "0<=X<200",
-      "duration": 24,
+      "duration": 18,
       "credit_history": "existing paid",
-      "purpose": "radio/tv",
-      "credit_amount": 3430,
-      "savings_status": "quite rich",
-      "employment": ">=7",
-      "installment_commitment": 3,
-      "personal_status": "male single",
+      "purpose": "repairs",
+      "credit_amount": 3872,
+      "savings_status": "<100",
+      "employment": "unemployed",
+      "installment_commitment": 2,
+      "personal_status": "female div/dep/mar",
       "other_parties": "none",
-      "residence_since": 2,
-      "property_magnitude": "real estate",
-      "age": 31,
+      "residence_since": 4,
+      "property_magnitude": "car",
+      "age": 67,
       "other_payment_plans": "none",
       "housing": "own",
       "existing_credits": 1,
       "job": "skilled",
       "num_dependents": 1,
-      "own_telephone": "none",
+      "own_telephone": "yes",
       "foreign_worker": "yes"
     },
-    "default_prob": 0.3120,
-    "label": "Applicant 25 (Age: 31, Credit: $3430, Risk Prob: 31.2%)"
+    "default_prob": 0.7028,
+    "status": "REJECTED",
+    "explanation": {
+      "error": false,
+      "probability": 0.7028,
+      "probability_pct": 70.28,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "REJECTED",
+      "risk_tier": "HIGH RISK",
+      "risk_tier_full": "High Risk Tier",
+      "risk_color": "rose",
+      "is_default": true,
+      "margin": 0.2028,
+      "margin_pct": 20.28,
+      "summary_sentence": "Rejected because the predicted default probability (70.28%) is above the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "repairs",
+          "raw_value": "repairs",
+          "contribution": 0.6188,
+          "direction": "increases_risk",
+          "explanation": "Feature Loan Purpose (repairs) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "unemployed",
+          "raw_value": "unemployed",
+          "contribution": 0.428,
+          "direction": "increases_risk",
+          "explanation": "Feature Employment Duration (unemployed) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "skilled",
+          "raw_value": "skilled",
+          "contribution": 0.0265,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (skilled) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "67 years",
+          "raw_value": 67,
+          "contribution": -0.1766,
+          "direction": "decreases_risk",
+          "explanation": "Borrower age (67 years) provides financial maturity, contributing toward lower risk."
+        },
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "18 months",
+          "raw_value": 18,
+          "contribution": -0.0969,
+          "direction": "decreases_risk",
+          "explanation": "Shorter loan duration (18 months) limits total credit exposure time, lowering risk."
+        },
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "own",
+          "raw_value": "own",
+          "contribution": -0.0534,
+          "direction": "decreases_risk",
+          "explanation": "Homeownership (own) demonstrates asset stability, contributing toward lower risk."
+        }
+      ]
+    },
+    "label": "Applicant #26 | Age 67 | $3,872 (18m) | Risk Prob: 70.3% [REJECTED]"
   },
   {
     "index": 26,
     "applicant": {
-      "checking_status": "<0",
+      "checking_status": "no checking",
       "duration": 6,
       "credit_history": "critical/other existing credit",
       "purpose": "radio/tv",
-      "credit_amount": 2647,
-      "savings_status": "quite rich",
+      "credit_amount": 1898,
+      "savings_status": "no known savings",
       "employment": "1<=X<4",
-      "installment_commitment": 2,
-      "personal_status": "male single",
-      "other_parties": "none",
-      "residence_since": 3,
-      "property_magnitude": "car",
-      "age": 44,
-      "other_payment_plans": "none",
-      "housing": "rent",
-      "existing_credits": 2,
-      "job": "skilled",
-      "num_dependents": 2,
-      "own_telephone": "none",
-      "foreign_worker": "yes"
-    },
-    "default_prob": 0.1652,
-    "label": "Applicant 26 (Age: 44, Credit: $2647, Risk Prob: 16.5%)"
-  },
-  {
-    "index": 27,
-    "applicant": {
-      "checking_status": "<0",
-      "duration": 10,
-      "credit_history": "existing paid",
-      "purpose": "new car",
-      "credit_amount": 2241,
-      "savings_status": "<100",
-      "employment": "<1",
       "installment_commitment": 1,
-      "personal_status": "male mar/wid",
+      "personal_status": "male single",
       "other_parties": "none",
       "residence_since": 2,
       "property_magnitude": "real estate",
-      "age": 48,
+      "age": 34,
       "other_payment_plans": "none",
-      "housing": "rent",
-      "existing_credits": 1,
+      "housing": "own",
+      "existing_credits": 2,
       "job": "unskilled resident",
       "num_dependents": 2,
       "own_telephone": "none",
       "foreign_worker": "yes"
     },
-    "default_prob": 0.3854,
-    "label": "Applicant 27 (Age: 48, Credit: $2241, Risk Prob: 38.5%)"
+    "default_prob": 0.0163,
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.0163,
+      "probability_pct": 1.63,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "LOW RISK",
+      "risk_tier_full": "Low Risk Tier",
+      "risk_color": "emerald",
+      "is_default": false,
+      "margin": 0.4837,
+      "margin_pct": 48.37,
+      "summary_sentence": "Approved because the predicted default probability (1.63%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "unskilled resident",
+          "raw_value": "unskilled resident",
+          "contribution": 0.0372,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (unskilled resident) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "6 months",
+          "raw_value": 6,
+          "contribution": -0.4069,
+          "direction": "decreases_risk",
+          "explanation": "Shorter loan duration (6 months) limits total credit exposure time, lowering risk."
+        },
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "radio/tv",
+          "raw_value": "radio/tv",
+          "contribution": -0.1834,
+          "direction": "decreases_risk",
+          "explanation": "Feature Loan Purpose (radio/tv) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "own",
+          "raw_value": "own",
+          "contribution": -0.0534,
+          "direction": "decreases_risk",
+          "explanation": "Homeownership (own) demonstrates asset stability, contributing toward lower risk."
+        }
+      ]
+    },
+    "label": "Applicant #27 | Age 34 | $1,898 (6m) | Risk Prob: 1.6% [APPROVED]"
   },
   {
-    "index": 28,
+    "index": 27,
     "applicant": {
-      "checking_status": "0<=X<200",
-      "duration": 12,
-      "credit_history": "existing paid",
-      "purpose": "new car",
-      "credit_amount": 1804,
-      "savings_status": "100<=X<500",
+      "checking_status": ">=200",
+      "duration": 6,
+      "credit_history": "delayed previously",
+      "purpose": "radio/tv",
+      "credit_amount": 683,
+      "savings_status": "<100",
       "employment": "<1",
-      "installment_commitment": 3,
-      "personal_status": "male single",
+      "installment_commitment": 2,
+      "personal_status": "female div/dep/mar",
       "other_parties": "none",
-      "residence_since": 2,
-      "property_magnitude": "car",
-      "age": 44,
-      "other_payment_plans": "none",
+      "residence_since": 1,
+      "property_magnitude": "life insurance",
+      "age": 29,
+      "other_payment_plans": "bank",
       "housing": "own",
       "existing_credits": 1,
       "job": "skilled",
@@ -779,34 +2533,265 @@
       "own_telephone": "none",
       "foreign_worker": "yes"
     },
-    "default_prob": 0.3541,
-    "label": "Applicant 28 (Age: 44, Credit: $1804, Risk Prob: 35.4%)"
+    "default_prob": 0.608,
+    "status": "REJECTED",
+    "explanation": {
+      "error": false,
+      "probability": 0.608,
+      "probability_pct": 60.8,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "REJECTED",
+      "risk_tier": "HIGH RISK",
+      "risk_tier_full": "High Risk Tier",
+      "risk_color": "rose",
+      "is_default": true,
+      "margin": 0.108,
+      "margin_pct": 10.8,
+      "summary_sentence": "Rejected because the predicted default probability (60.80%) is above the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "<1",
+          "raw_value": "<1",
+          "contribution": 0.3464,
+          "direction": "increases_risk",
+          "explanation": "Feature Employment Duration (<1) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "29 years",
+          "raw_value": 29,
+          "contribution": 0.0277,
+          "direction": "increases_risk",
+          "explanation": "Feature Borrower Age (29 years) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "skilled",
+          "raw_value": "skilled",
+          "contribution": 0.0265,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (skilled) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "6 months",
+          "raw_value": 6,
+          "contribution": -0.4069,
+          "direction": "decreases_risk",
+          "explanation": "Shorter loan duration (6 months) limits total credit exposure time, lowering risk."
+        },
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "radio/tv",
+          "raw_value": "radio/tv",
+          "contribution": -0.1834,
+          "direction": "decreases_risk",
+          "explanation": "Feature Loan Purpose (radio/tv) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "own",
+          "raw_value": "own",
+          "contribution": -0.0534,
+          "direction": "decreases_risk",
+          "explanation": "Homeownership (own) demonstrates asset stability, contributing toward lower risk."
+        }
+      ]
+    },
+    "label": "Applicant #28 | Age 29 | $683 (6m) | Risk Prob: 60.8% [REJECTED]"
+  },
+  {
+    "index": 28,
+    "applicant": {
+      "checking_status": "no checking",
+      "duration": 24,
+      "credit_history": "critical/other existing credit",
+      "purpose": "radio/tv",
+      "credit_amount": 5103,
+      "savings_status": "<100",
+      "employment": "<1",
+      "installment_commitment": 3,
+      "personal_status": "male mar/wid",
+      "other_parties": "none",
+      "residence_since": 3,
+      "property_magnitude": "no known property",
+      "age": 47,
+      "other_payment_plans": "none",
+      "housing": "for free",
+      "existing_credits": 3,
+      "job": "skilled",
+      "num_dependents": 1,
+      "own_telephone": "yes",
+      "foreign_worker": "yes"
+    },
+    "default_prob": 0.3384,
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.3384,
+      "probability_pct": 33.84,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "LOW RISK",
+      "risk_tier_full": "Low Risk Tier",
+      "risk_color": "emerald",
+      "is_default": false,
+      "margin": 0.1616,
+      "margin_pct": 16.16,
+      "summary_sentence": "Approved because the predicted default probability (33.84%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "employment",
+          "feature": "Employment Duration",
+          "value": "<1",
+          "raw_value": "<1",
+          "contribution": 0.3464,
+          "direction": "increases_risk",
+          "explanation": "Feature Employment Duration (<1) contributes toward higher predicted default risk."
+        },
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "24 months",
+          "raw_value": 24,
+          "contribution": 0.0581,
+          "direction": "increases_risk",
+          "explanation": "Extended loan repayment duration (24 months) increases credit risk exposure over time."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "skilled",
+          "raw_value": "skilled",
+          "contribution": 0.0265,
+          "direction": "increases_risk",
+          "explanation": "Feature Job Qualification Tier (skilled) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "housing",
+          "feature": "Housing Status",
+          "value": "for free",
+          "raw_value": "for free",
+          "contribution": -0.5216,
+          "direction": "decreases_risk",
+          "explanation": "Homeownership (for free) demonstrates asset stability, contributing toward lower risk."
+        },
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "radio/tv",
+          "raw_value": "radio/tv",
+          "contribution": -0.1834,
+          "direction": "decreases_risk",
+          "explanation": "Feature Loan Purpose (radio/tv) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "47 years",
+          "raw_value": 47,
+          "contribution": -0.0691,
+          "direction": "decreases_risk",
+          "explanation": "Borrower age (47 years) provides financial maturity, contributing toward lower risk."
+        }
+      ]
+    },
+    "label": "Applicant #29 | Age 47 | $5,103 (24m) | Risk Prob: 33.8% [APPROVED]"
   },
   {
     "index": 29,
     "applicant": {
       "checking_status": "no checking",
-      "duration": 6,
+      "duration": 12,
       "credit_history": "critical/other existing credit",
-      "purpose": "furniture/equipment",
-      "credit_amount": 1374,
+      "purpose": "business",
+      "credit_amount": 1412,
       "savings_status": "<100",
-      "employment": "unemployed",
-      "installment_commitment": 1,
-      "personal_status": "male single",
-      "other_parties": "none",
+      "employment": "1<=X<4",
+      "installment_commitment": 4,
+      "personal_status": "female div/dep/mar",
+      "other_parties": "guarantor",
       "residence_since": 2,
       "property_magnitude": "real estate",
-      "age": 36,
+      "age": 29,
       "other_payment_plans": "none",
       "housing": "own",
       "existing_credits": 2,
-      "job": "unskilled resident",
+      "job": "high qualif/self emp/mgmt",
       "num_dependents": 1,
-      "own_telephone": "none",
+      "own_telephone": "yes",
       "foreign_worker": "yes"
     },
-    "default_prob": 0.1241,
-    "label": "Applicant 29 (Age: 36, Credit: $1374, Risk Prob: 12.4%)"
+    "default_prob": 0.0745,
+    "status": "APPROVED",
+    "explanation": {
+      "error": false,
+      "probability": 0.0745,
+      "probability_pct": 7.45,
+      "threshold": 0.5,
+      "threshold_pct": 50.0,
+      "decision": "APPROVED",
+      "risk_tier": "LOW RISK",
+      "risk_tier_full": "Low Risk Tier",
+      "risk_color": "emerald",
+      "is_default": false,
+      "margin": 0.4255,
+      "margin_pct": 42.55,
+      "summary_sentence": "Approved because the predicted default probability (7.45%) is below the selected risk threshold (50.00%).",
+      "risk_factors": [
+        {
+          "feature_key": "age",
+          "feature": "Borrower Age",
+          "value": "29 years",
+          "raw_value": 29,
+          "contribution": 0.0277,
+          "direction": "increases_risk",
+          "explanation": "Feature Borrower Age (29 years) contributes toward higher predicted default risk."
+        }
+      ],
+      "protective_factors": [
+        {
+          "feature_key": "duration",
+          "feature": "Loan Duration",
+          "value": "12 months",
+          "raw_value": 12,
+          "contribution": -0.2519,
+          "direction": "decreases_risk",
+          "explanation": "Shorter loan duration (12 months) limits total credit exposure time, lowering risk."
+        },
+        {
+          "feature_key": "job",
+          "feature": "Job Qualification Tier",
+          "value": "high qualif/self emp/mgmt",
+          "raw_value": "high qualif/self emp/mgmt",
+          "contribution": -0.0675,
+          "direction": "decreases_risk",
+          "explanation": "Feature Job Qualification Tier (high qualif/self emp/mgmt) contributes toward lower estimated default risk."
+        },
+        {
+          "feature_key": "purpose",
+          "feature": "Loan Purpose",
+          "value": "business",
+          "raw_value": "business",
+          "contribution": -0.0648,
+          "direction": "decreases_risk",
+          "explanation": "Feature Loan Purpose (business) contributes toward lower estimated default risk."
+        }
+      ]
+    },
+    "label": "Applicant #30 | Age 29 | $1,412 (12m) | Risk Prob: 7.4% [APPROVED]"
   }
 ]

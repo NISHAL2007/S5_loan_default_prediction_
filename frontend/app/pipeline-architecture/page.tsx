@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { fetchSampleApplicants, fetchMaxSafeLoan, fetchStressMatrix } from '@/lib/api';
 import sample30 from '../lib/sample_30_applicants.json';
+import ExplanationCard from '../components/ExplanationCard';
 import { 
   Network, 
   Layers, 
@@ -280,6 +281,11 @@ export default function PipelineArchitecturePage() {
           ))}
         </div>
       </div>
+
+      {/* Selected Applicant Structured Explanation Card */}
+      {samples[selectedIdx]?.explanation && (
+        <ExplanationCard explanation={samples[selectedIdx].explanation} />
+      )}
 
       {/* SECTION 3: Novelty Features Panel (Max Safe Loan & Stress Heatmap) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 font-mono text-xs">

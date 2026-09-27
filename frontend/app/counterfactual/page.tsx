@@ -38,6 +38,8 @@ const DEFAULT_COUNTERFACTUAL_DATA = {
   ]
 };
 
+import ExplanationCard from '../components/ExplanationCard';
+
 export default function CounterfactualPage() {
   const [data, setData] = useState<any>(DEFAULT_COUNTERFACTUAL_DATA);
   const [applicant, setApplicant] = useState<any>(null);
@@ -154,6 +156,11 @@ export default function CounterfactualPage() {
           <span>{data.citation}</span>
         </div>
       </div>
+
+      {/* Explanation Card */}
+      {data.explanation && (
+        <ExplanationCard explanation={data.explanation} />
+      )}
 
       {/* Main Recourse Recommendations */}
       {!isDefault ? (
