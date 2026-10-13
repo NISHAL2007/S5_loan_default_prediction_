@@ -176,9 +176,9 @@ export default function UnderwritingCockpitPage() {
         <div>
           <div className="flex items-center space-x-2">
             <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">
-              <Zap className="w-3 h-3 mr-1" /> Track 05: AI for Productivity & Automation
+              <Zap className="w-3 h-3 mr-1" /> Enterprise Credit Intelligence
             </span>
-            <span className="text-zinc-500 text-xs font-mono">| End-to-End Orchestrator</span>
+            <span className="text-zinc-500 text-xs font-mono">| Autonomous Decision-Support Engine</span>
           </div>
           <h1 className="text-2xl font-bold text-zinc-100 tracking-tight mt-1">
             Autonomous Underwriting Cockpit
@@ -199,11 +199,11 @@ export default function UnderwritingCockpitPage() {
         )}
       </div>
 
-      {/* 3 Quick Demo Presets */}
+      {/* Benchmark Presets */}
       <div className="space-y-2 print:hidden">
         <div className="flex items-center justify-between text-xs font-mono text-zinc-400">
-          <span className="font-semibold text-zinc-300">⚡ 1-Click Demo Profiles (For Rapid Judge Evaluation):</span>
-          <span>Click to instantly load candidate</span>
+          <span className="font-semibold text-zinc-300">Preset Borrower Profiles:</span>
+          <span>Click to load profile</span>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {PRESET_PROFILES.map((p, idx) => {

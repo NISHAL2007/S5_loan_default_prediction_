@@ -38,7 +38,7 @@ export default function Sidebar() {
           </div>
           <div>
             <h1 className="font-semibold text-zinc-100 text-sm tracking-wide">CrediFlow AI</h1>
-            <p className="text-[11px] text-amber-400/90 font-mono">Track 05: Automation</p>
+            <p className="text-[11px] text-zinc-400 font-mono">Enterprise Underwriting</p>
           </div>
         </div>
 

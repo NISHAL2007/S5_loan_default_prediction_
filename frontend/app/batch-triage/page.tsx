@@ -65,9 +65,9 @@ export default function BatchTriagePage() {
         <div>
           <div className="flex items-center space-x-2">
             <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20">
-              <Zap className="w-3 h-3 mr-1" /> Track 05: AI for Productivity & Automation
+              <Zap className="w-3 h-3 mr-1" /> High-Throughput Batch Engine
             </span>
-            <span className="text-zinc-500 text-xs font-mono">| High-Throughput Engine</span>
+            <span className="text-zinc-500 text-xs font-mono">| Portfolio Triage</span>
           </div>
           <h1 className="text-2xl font-bold text-zinc-100 tracking-tight mt-1">
             Autonomous Batch Queue Underwriting & Triage

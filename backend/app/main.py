@@ -309,7 +309,7 @@ def compute_stress_matrix(data: BorrowerInput):
         'stress_matrix': matrix_cells
     }
 
-# TRACK 05 AUTOMATION ENDPOINTS: Autonomous Underwriting Pipeline & Batch Triage
+# ENTERPRISE AUTOMATION ENDPOINTS: Autonomous Underwriting Pipeline & Batch Triage
 @app.post("/workflow/audit")
 def audit_applicant(data: BorrowerInput):
     """

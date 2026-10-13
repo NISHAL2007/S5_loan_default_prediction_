@@ -83,22 +83,22 @@ export default function OverviewPage() {
 
   return (
     <div className="space-y-6">
-      {/* Track 05 Flagship Showcase Banner */}
-      <div className="bg-gradient-to-r from-amber-500/10 via-zinc-900 to-zinc-900 border border-amber-500/30 p-6 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xl">
+      {/* Enterprise Executive Overview Banner */}
+      <div className="bg-gradient-to-r from-zinc-900 via-[#141417] to-zinc-900 border border-zinc-800 p-6 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xl">
         <div className="space-y-2 max-w-2xl">
           <div className="flex items-center space-x-2">
-            <span className="inline-flex items-center px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-amber-400 text-zinc-950">
-              HORIZON X 2K26
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded text-[11px] font-mono font-semibold bg-zinc-800 text-amber-400 border border-amber-500/20">
+              Enterprise Risk Suite
             </span>
-            <span className="text-amber-400 text-xs font-mono font-medium">
-              Track 05: AI for Productivity & Automation
+            <span className="text-zinc-400 text-xs font-mono">
+              Autonomous Credit Intelligence
             </span>
           </div>
           <h2 className="text-xl md:text-2xl font-bold text-zinc-100 tracking-tight">
-            CrediFlow AI: Autonomous Credit Decision-Support & Underwriting Automation
+            CrediFlow AI: Autonomous Credit Risk Decision-Support & Underwriting System
           </h2>
           <p className="text-xs text-zinc-400 font-mono leading-relaxed">
-            Eliminating 45 minutes of manual underwriting friction per applicant. An end-to-end autonomous workflow combining Platt-calibrated probability scoring, automated SHAP narrative synthesis, stability stress-testing, and prescriptive counterfactual approval pathways into an audit-ready executive dossier.
+            Eliminating manual underwriting friction through end-to-end automation. Combines Platt-calibrated probability scoring, automated SHAP narrative synthesis, financial shock stress-testing, and prescriptive counterfactual recourse into an audit-ready executive dossier.
           </p>
         </div>
 
