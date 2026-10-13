@@ -18,9 +18,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Dict, Any, Optional, List
 
-from explainability import compute_shap_values, get_local_explanation_summary
+from explainability import compute_shap_values, get_local_explanation_summary, generate_structured_explanation
 from stability import run_prediction_stability_analysis
 from counterfactual import generate_counterfactual_explanations
+from workflow import run_automated_underwriting_pipeline, run_batch_triage
 
 app = FastAPI(
     title="Loan Default Prediction API",
@@ -77,6 +78,10 @@ for fname, val in sorted(zip(feature_names, mean_abs_shap), key=lambda x: x[1], 
 # Pydantic Schemas
 class BorrowerInput(BaseModel):
     applicant: Dict[str, Any]
+    threshold: Optional[float] = 0.50
+
+class BatchInput(BaseModel):
+    applicants: Optional[List[Dict[str, Any]]] = None
     threshold: Optional[float] = 0.50
 
 @app.get("/")
@@ -303,6 +308,54 @@ def compute_stress_matrix(data: BorrowerInput):
         'original_duration': orig_duration,
         'stress_matrix': matrix_cells
     }
+
+# TRACK 05 AUTOMATION ENDPOINTS: Autonomous Underwriting Pipeline & Batch Triage
+@app.post("/workflow/audit")
+def audit_applicant(data: BorrowerInput):
+    """
+    Automates the full 7-step credit decision-support workflow:
+    Validation -> Preprocessing -> Scoring -> SHAP Rationale -> Fragility Testing -> Counterfactual Recourse -> Safe Limit -> Executive Dossier.
+    """
+    try:
+        threshold = data.threshold if data.threshold is not None else 0.50
+        res = run_automated_underwriting_pipeline(
+            model=model,
+            preprocessor=preprocessor,
+            applicant=data.applicant,
+            threshold=threshold,
+            X_train_trans=X_train_trans,
+            feature_names=feature_names
+        )
+        return res
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Autonomous pipeline error: {str(e)}")
+
+@app.post("/workflow/batch-triage")
+def batch_triage(data: Optional[BatchInput] = None):
+    """
+    Batch Queue Productivity & Automation Engine:
+    Processes applicant queues in milliseconds and triages into Fast-Track Approved, Senior Review, and Declined.
+    """
+    try:
+        threshold = 0.50
+        applicants_list = []
+        if data and data.threshold is not None:
+            threshold = data.threshold
+        if data and data.applicants and len(data.applicants) > 0:
+            applicants_list = data.applicants
+        else:
+            limit = min(30, len(X_test_raw))
+            applicants_list = [X_test_raw.iloc[i].to_dict() for i in range(limit)]
+            
+        res = run_batch_triage(
+            model=model,
+            preprocessor=preprocessor,
+            applicants_list=applicants_list,
+            threshold=threshold
+        )
+        return res
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Batch triage error: {str(e)}")
 
 if __name__ == '__main__':
     import uvicorn

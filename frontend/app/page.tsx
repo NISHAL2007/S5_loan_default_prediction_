@@ -1,13 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { fetchModelInfo } from '@/lib/api';
 import { 
   Users, 
   AlertTriangle, 
   Award, 
   Target, 
-  TrendingUp 
+  TrendingUp,
+  Zap,
+  Layers,
+  ArrowRight
 } from 'lucide-react';
 import { 
   BarChart, 
@@ -79,6 +83,44 @@ export default function OverviewPage() {
 
   return (
     <div className="space-y-6">
+      {/* Track 05 Flagship Showcase Banner */}
+      <div className="bg-gradient-to-r from-amber-500/10 via-zinc-900 to-zinc-900 border border-amber-500/30 p-6 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-6 shadow-xl">
+        <div className="space-y-2 max-w-2xl">
+          <div className="flex items-center space-x-2">
+            <span className="inline-flex items-center px-2.5 py-0.5 rounded text-[11px] font-mono font-bold bg-amber-400 text-zinc-950">
+              HORIZON X 2K26
+            </span>
+            <span className="text-amber-400 text-xs font-mono font-medium">
+              Track 05: AI for Productivity & Automation
+            </span>
+          </div>
+          <h2 className="text-xl md:text-2xl font-bold text-zinc-100 tracking-tight">
+            CrediFlow AI: Autonomous Credit Decision-Support & Underwriting Automation
+          </h2>
+          <p className="text-xs text-zinc-400 font-mono leading-relaxed">
+            Eliminating 45 minutes of manual underwriting friction per applicant. An end-to-end autonomous workflow combining Platt-calibrated probability scoring, automated SHAP narrative synthesis, stability stress-testing, and prescriptive counterfactual approval pathways into an audit-ready executive dossier.
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row md:flex-col gap-2.5 shrink-0">
+          <Link
+            href="/underwriting-cockpit"
+            className="flex items-center justify-center space-x-2 px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold rounded-xl text-xs font-mono transition shadow-lg shadow-amber-500/20"
+          >
+            <Zap className="w-4 h-4" />
+            <span>Launch Underwriting Cockpit</span>
+            <ArrowRight className="w-3.5 h-3.5 ml-1" />
+          </Link>
+          <Link
+            href="/batch-triage"
+            className="flex items-center justify-center space-x-2 px-5 py-2.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 rounded-xl text-xs font-mono transition border border-zinc-700"
+          >
+            <Layers className="w-4 h-4 text-amber-400" />
+            <span>Run Batch Queue Triage</span>
+          </Link>
+        </div>
+      </div>
+
       {/* Header Banner */}
       <div>
         <h1 className="text-xl font-bold text-zinc-100 tracking-tight">System Overview & Model Benchmark</h1>

@@ -7,8 +7,8 @@ import Navbar from './components/Navbar';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Loan Default Prediction & Stability Analytics',
-  description: 'Explainable AI credit risk assessment, SHAP explainability, prediction stability, and counterfactual recourse.',
+  title: 'CrediFlow AI: Autonomous Credit Decision-Support & Underwriting Automation',
+  description: 'HORIZON X 2K26 Track 05: AI for Productivity & Automation. Autonomous credit underwriting workflow combining calibrated scoring, SHAP narrative synthesis, stability stress-testing, and counterfactual approval pathways.',
 };
 
 export default function RootLayout({

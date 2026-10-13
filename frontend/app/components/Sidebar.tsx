@@ -9,16 +9,20 @@ import {
   FlaskConical, 
   Workflow, 
   Building2,
-  Network
+  Network,
+  Zap,
+  Layers
 } from 'lucide-react';
 
 const navItems = [
-  { href: '/', label: 'Overview', icon: LayoutDashboard },
+  { href: '/underwriting-cockpit', label: 'Underwriting Cockpit', icon: Zap },
+  { href: '/batch-triage', label: 'Batch Queue Triage', icon: Layers },
+  { href: '/', label: 'Overview & Benchmark', icon: LayoutDashboard },
   { href: '/risk-assessment', label: 'Risk Assessment', icon: ShieldAlert },
   { href: '/explainability', label: 'Explainability (SHAP)', icon: BrainCircuit },
   { href: '/stability-lab', label: 'Stability Lab', icon: FlaskConical },
   { href: '/counterfactual', label: 'Counterfactual Analysis', icon: Workflow },
-  { href: '/pipeline-architecture', label: 'Pipeline & Novelty', icon: Network },
+  { href: '/pipeline-architecture', label: 'Pipeline Architecture', icon: Network },
 ];
 
 export default function Sidebar() {
@@ -30,11 +34,11 @@ export default function Sidebar() {
         {/* Header Branding */}
         <div className="p-5 border-b border-zinc-800/80 flex items-center space-x-3">
           <div className="w-9 h-9 rounded-lg bg-zinc-800 border border-zinc-700 flex items-center justify-center text-amber-400 font-semibold shadow-inner">
-            <Building2 className="w-5 h-5 text-amber-400" />
+            <Zap className="w-5 h-5 text-amber-400" />
           </div>
           <div>
-            <h1 className="font-semibold text-zinc-100 text-sm tracking-wide">CreditRisk AI</h1>
-            <p className="text-xs text-zinc-500 font-mono">Fintech Analytics v2.0</p>
+            <h1 className="font-semibold text-zinc-100 text-sm tracking-wide">CrediFlow AI</h1>
+            <p className="text-[11px] text-amber-400/90 font-mono">Track 05: Automation</p>
           </div>
         </div>
 
