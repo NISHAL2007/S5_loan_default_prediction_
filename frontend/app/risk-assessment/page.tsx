@@ -181,7 +181,7 @@ export default function RiskAssessmentPage() {
       )}
 
       {/* Main Assessment Form */}
-      <form onSubmit={handleAnalyze} className="bg-[#141417] border border-zinc-800/80 p-6 rounded-xl space-y-6">
+      <form onSubmit={handleAnalyze} noValidate className="bg-[#141417] border border-zinc-800/80 p-6 rounded-xl space-y-6">
         <div className="flex items-center justify-between border-b border-zinc-800/80 pb-3">
           <h2 className="text-sm font-semibold text-zinc-200 font-mono flex items-center space-x-2">
             <FileEdit className="w-4 h-4 text-amber-400" />
@@ -205,6 +205,7 @@ export default function RiskAssessmentPage() {
               type="number"
               min="18"
               max="100"
+              step="any"
               value={applicant.age ?? 35}
               onChange={(e) => handleFieldChange('age', Number(e.target.value))}
               className="w-full bg-zinc-900 border border-zinc-700/80 rounded px-3 py-2 text-zinc-100 focus:outline-none focus:border-amber-400"
@@ -223,7 +224,7 @@ export default function RiskAssessmentPage() {
               type="number"
               min="200"
               max="100000"
-              step="50"
+              step="any"
               value={applicant.credit_amount ?? 2500}
               onChange={(e) => handleFieldChange('credit_amount', Number(e.target.value))}
               className="w-full bg-zinc-900 border border-zinc-700/80 rounded px-3 py-2 text-zinc-100 focus:outline-none focus:border-amber-400"
@@ -242,6 +243,7 @@ export default function RiskAssessmentPage() {
               type="number"
               min="4"
               max="96"
+              step="any"
               value={applicant.duration ?? 24}
               onChange={(e) => handleFieldChange('duration', Number(e.target.value))}
               className="w-full bg-zinc-900 border border-zinc-700/80 rounded px-3 py-2 text-zinc-100 focus:outline-none focus:border-amber-400"
@@ -361,6 +363,7 @@ export default function RiskAssessmentPage() {
                   type="number"
                   min="1"
                   max="4"
+                  step="any"
                   value={applicant.installment_commitment ?? 3}
                   onChange={(e) => handleFieldChange('installment_commitment', Number(e.target.value))}
                   className="w-full bg-zinc-900 border border-zinc-700/80 rounded px-3 py-2 text-zinc-100 focus:outline-none focus:border-amber-400"
@@ -373,6 +376,7 @@ export default function RiskAssessmentPage() {
                   type="number"
                   min="1"
                   max="4"
+                  step="any"
                   value={applicant.residence_since ?? 3}
                   onChange={(e) => handleFieldChange('residence_since', Number(e.target.value))}
                   className="w-full bg-zinc-900 border border-zinc-700/80 rounded px-3 py-2 text-zinc-100 focus:outline-none focus:border-amber-400"
@@ -385,6 +389,7 @@ export default function RiskAssessmentPage() {
                   type="number"
                   min="1"
                   max="10"
+                  step="any"
                   value={applicant.existing_credits ?? 1}
                   onChange={(e) => handleFieldChange('existing_credits', Number(e.target.value))}
                   className="w-full bg-zinc-900 border border-zinc-700/80 rounded px-3 py-2 text-zinc-100 focus:outline-none focus:border-amber-400"
@@ -397,6 +402,7 @@ export default function RiskAssessmentPage() {
                   type="number"
                   min="1"
                   max="10"
+                  step="any"
                   value={applicant.num_dependents ?? 1}
                   onChange={(e) => handleFieldChange('num_dependents', Number(e.target.value))}
                   className="w-full bg-zinc-900 border border-zinc-700/80 rounded px-3 py-2 text-zinc-100 focus:outline-none focus:border-amber-400"
