@@ -72,8 +72,15 @@ export default function CounterfactualPage() {
         if (applicantDict) {
           setApplicant(applicantDict);
           const res = await fetchCounterfactual(applicantDict, thresh).catch(() => null);
-          if (res && res.single_feature_recourses) {
-            setData(res);
+          if (res && (res.counterfactuals !== undefined || res.original_prob !== undefined)) {
+            setData({
+              original_prob: res.original_prob ?? res.original_probability ?? 0.50,
+              original_decision: res.original_decision ?? res.original_status ?? (Number(res.original_prob) >= thresh ? 'Default' : 'APPROVED'),
+              threshold: res.threshold ?? thresh,
+              status: res.status ?? (res.counterfactuals?.length > 0 ? 'Recourse found' : 'No recourse found'),
+              citation: res.citation ?? 'Based on counterfactual explanations (Wachter et al., 2017) using single/dual feature parameter search.',
+              counterfactuals: res.counterfactuals || []
+            });
           }
         }
       } catch (err: any) {
@@ -117,7 +124,7 @@ export default function CounterfactualPage() {
     );
   }
 
-  const isDefault = data.original_decision === 'Default';
+  const isDefault = data.original_decision === 'Default' || data.original_decision === 'REJECTED' || (Number(data.original_prob) >= Number(data.threshold));
   const counterfactuals = data.counterfactuals || [];
 
   return (

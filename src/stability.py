@@ -7,8 +7,20 @@ def run_prediction_stability_analysis(model, preprocessor, applicant_row, numeri
     Perturbs selected numeric features by -5% and +5%, holding other features constant,
     and measures the change in predicted default probability.
     """
+    # Ensure all 20 required features exist before transformation
+    default_vals = {
+        'duration': 18.0, 'credit_amount': 2319.5, 'installment_commitment': 3.0,
+        'residence_since': 3.0, 'age': 33.0, 'existing_credits': 1.0, 'num_dependents': 1.0,
+        'checking_status': 'no checking', 'credit_history': 'existing paid',
+        'purpose': 'radio/tv', 'savings_status': '<100', 'employment': '1<=X<4',
+        'personal_status': 'male single', 'other_parties': 'none',
+        'property_magnitude': 'car', 'other_payment_plans': 'none',
+        'housing': 'own', 'job': 'skilled', 'own_telephone': 'none', 'foreign_worker': 'yes'
+    }
+    clean_dict = {**default_vals, **{k: v for k, v in applicant_row.items() if k != 'target'}}
+
     # 1. Base prediction
-    base_df = pd.DataFrame([applicant_row])
+    base_df = pd.DataFrame([clean_dict])
     base_trans = preprocessor.transform(base_df)
     base_prob = model.predict_proba(base_trans)[0, 1]
     
@@ -16,9 +28,9 @@ def run_prediction_stability_analysis(model, preprocessor, applicant_row, numeri
     abs_changes = []
     
     for feat in numeric_features:
-        if feat not in applicant_row:
+        if feat not in clean_dict:
             continue
-        orig_val = applicant_row[feat]
+        orig_val = float(clean_dict[feat])
         
         # Perturbations: -5%, Original, +5%
         percentages = [-5.0, 0.0, 5.0]

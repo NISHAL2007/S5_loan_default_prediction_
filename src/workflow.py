@@ -15,6 +15,16 @@ from explainability import generate_structured_explanation, compute_shap_values,
 from stability import run_prediction_stability_analysis
 from counterfactual import generate_counterfactual_explanations
 
+DEFAULT_FEATURE_VALUES = {
+    'duration': 18.0, 'credit_amount': 2319.5, 'installment_commitment': 3.0,
+    'residence_since': 3.0, 'age': 33.0, 'existing_credits': 1.0, 'num_dependents': 1.0,
+    'checking_status': 'no checking', 'credit_history': 'existing paid',
+    'purpose': 'radio/tv', 'savings_status': '<100', 'employment': '1<=X<4',
+    'personal_status': 'male single', 'other_parties': 'none',
+    'property_magnitude': 'car', 'other_payment_plans': 'none',
+    'housing': 'own', 'job': 'skilled', 'own_telephone': 'none', 'foreign_worker': 'yes'
+}
+
 def validate_applicant(applicant: dict) -> dict:
     """
     Automatic Validation Guardrail:
@@ -77,7 +87,8 @@ def run_automated_underwriting_pipeline(
     val_res = validate_applicant(applicant)
     
     # 2. Preprocessing & Calibrated Prediction
-    applicant_df = pd.DataFrame([applicant])
+    clean_dict = {**DEFAULT_FEATURE_VALUES, **{k: v for k, v in applicant.items() if k != 'target'}}
+    applicant_df = pd.DataFrame([clean_dict])
     trans = preprocessor.transform(applicant_df)
     prob = float(model.predict_proba(trans)[0, 1])
     
@@ -240,7 +251,8 @@ def run_batch_triage(
     declined_count = 0
     
     for idx, applicant in enumerate(applicants_list):
-        df_row = pd.DataFrame([applicant])
+        clean_app = {**DEFAULT_FEATURE_VALUES, **{k: v for k, v in applicant.items() if k != 'target'}}
+        df_row = pd.DataFrame([clean_app])
         trans = preprocessor.transform(df_row)
         prob = float(model.predict_proba(trans)[0, 1])
         

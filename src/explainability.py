@@ -141,7 +141,19 @@ def generate_structured_explanation(model, preprocessor, applicant_dict, thresho
     Generates structured, applicant-specific explanation data derived from exact model SHAP values / feature contributions.
     Guarantees strict validation of probability, threshold, and feature contributions.
     """
-    applicant_df = pd.DataFrame([applicant_dict])
+    # Ensure all 20 required features exist before transformation
+    default_vals = {
+        'duration': 18.0, 'credit_amount': 2319.5, 'installment_commitment': 3.0,
+        'residence_since': 3.0, 'age': 33.0, 'existing_credits': 1.0, 'num_dependents': 1.0,
+        'checking_status': 'no checking', 'credit_history': 'existing paid',
+        'purpose': 'radio/tv', 'savings_status': '<100', 'employment': '1<=X<4',
+        'personal_status': 'male single', 'other_parties': 'none',
+        'property_magnitude': 'car', 'other_payment_plans': 'none',
+        'housing': 'own', 'job': 'skilled', 'own_telephone': 'none', 'foreign_worker': 'yes'
+    }
+    clean_dict = {**default_vals, **{k: v for k, v in applicant_dict.items() if k != 'target'}}
+
+    applicant_df = pd.DataFrame([clean_dict])
     trans = preprocessor.transform(applicant_df)
     prob = float(model.predict_proba(trans)[0, 1])
 

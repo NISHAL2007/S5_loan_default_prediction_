@@ -172,17 +172,21 @@ export default function StabilityLabPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-800/60 text-zinc-300">
-                {data.perturbation_table.map((row: any, idx: number) => (
-                  <tr key={idx} className="hover:bg-zinc-900/40">
-                    <td className="py-2 px-3 text-amber-400 font-semibold">{row.Scenario}</td>
-                    <td className="py-2 px-3">{row['Original Value']}</td>
-                    <td className="py-2 px-3">{row['New Value']}</td>
-                    <td className="py-2 px-3">{(row['New Default Prob'] * 100).toFixed(2)}%</td>
-                    <td className={`py-2 px-3 font-semibold ${row['Probability Difference'] >= 0 ? 'text-rose-400' : 'text-emerald-400'}`}>
-                      {row['Probability Difference'] >= 0 ? '+' : ''}{(row['Probability Difference'] * 100).toFixed(2)}%
-                    </td>
-                  </tr>
-                ))}
+                {data.perturbation_table.map((row: any, idx: number) => {
+                  const newProb = Number(row['New Default Prob'] ?? row.new_prob ?? row.new_probability ?? 0);
+                  const diff = Number(row['Probability Difference'] ?? row.prob_delta ?? (newProb - Number(row['Original Default Prob'] ?? row.original_prob ?? 0)));
+                  return (
+                    <tr key={idx} className="hover:bg-zinc-900/40">
+                      <td className="py-2 px-3 text-amber-400 font-semibold">{row.Scenario || row.scenario}</td>
+                      <td className="py-2 px-3">{row['Original Value'] ?? row.original_value}</td>
+                      <td className="py-2 px-3">{row['New Value'] ?? row.perturbed_value}</td>
+                      <td className="py-2 px-3">{Number.isFinite(newProb) ? `${(newProb * 100).toFixed(2)}%` : 'N/A'}</td>
+                      <td className={`py-2 px-3 font-semibold ${diff >= 0 ? 'text-rose-400' : 'text-emerald-400'}`}>
+                        {Number.isFinite(diff) ? `${diff >= 0 ? '+' : ''}${(diff * 100).toFixed(2)}%` : 'N/A'}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
