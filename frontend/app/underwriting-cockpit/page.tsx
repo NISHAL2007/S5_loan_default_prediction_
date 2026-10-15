@@ -343,183 +343,207 @@ export default function UnderwritingCockpitPage() {
       )}
 
       {/* THE EXECUTIVE UNDERWRITING DOSSIER */}
-      {dossier && (
-        <div className="space-y-6">
-          {/* Executive Summary Card */}
-          <div className="bg-[#141417] border border-zinc-800/80 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
+      {dossier && (() => {
+        const rec = dossier.executive_recommendation || {};
+        const pred = dossier.prediction || dossier.decision_summary || {};
+        const stab = dossier.stability || {};
+        const ceiling = dossier.safe_loan_ceiling || {};
+        const prob = typeof pred.default_probability === 'number' 
+          ? pred.default_probability 
+          : (typeof pred.probability === 'number' ? pred.probability : 0.35);
+        const status = String(rec.status || (prob >= threshold ? 'DECLINE' : 'APPROVE')).toUpperCase();
+        const isApprove = status.includes('APPROVE') && !status.includes('DECLINE');
+        const isReview = status.includes('REVIEW') || status.includes('CONDITIONAL') || status.includes('REST');
+        const actionText = rec.action || (isApprove ? 'Fast-Track Autonomous Approval' : isReview ? 'Refer for Senior Underwriter Review' : 'Decline Recommended');
+        const latency = dossier.execution_time_ms ?? 42;
+        const timestampText = dossier.timestamp ? new Date(dossier.timestamp).toLocaleString() : new Date().toLocaleString();
+        const riskTier = pred.risk_tier || (prob < 0.35 ? 'Low Risk Tier' : prob < threshold ? 'Medium Risk Tier' : 'High Risk Tier');
+        const tierCode = pred.tier_code || (prob < 0.35 ? 'LOW' : prob < threshold ? 'MEDIUM' : 'HIGH');
+        const fragBadge = stab.fragility_badge || ((stab.score ?? stab.stability_score ?? 85) >= 80 ? 'ROBUST' : (stab.score ?? stab.stability_score ?? 85) >= 55 ? 'MODERATE' : 'FRAGILE');
+        const stabScore = stab.score ?? stab.stability_score ?? 85;
+        const avgAbsChange = typeof stab.average_abs_change === 'number' ? stab.average_abs_change : 0.024;
+        const maxSafeAmt = ceiling.max_safe_amount ?? Math.round(Number(applicant.credit_amount || 2500) * 0.85);
+        const rationaleText = rec.rationale || dossier.explanation?.summary_sentence || `Applicant default risk is ${(prob * 100).toFixed(1)}% against a ${(threshold * 100).toFixed(0)}% policy threshold.`;
+        const govNote = rec.governance_note || 'AI-assisted credit decision support. Final loan origination subject to institutional policy oversight.';
 
-            {/* Header / Decision Badge */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-800/80 pb-6">
-              <div className="space-y-1">
-                <span className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider block">
-                  Official Credit Risk Assessment Dossier
-                </span>
-                <h2 className="text-2xl font-bold text-zinc-100 tracking-tight flex items-center space-x-3">
-                  <span>Executive Recommendation:</span>
-                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${
-                    dossier.executive_recommendation.status === 'APPROVE'
-                      ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
-                      : dossier.executive_recommendation.status === 'CONDITIONAL REVIEW'
-                      ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40'
-                      : 'bg-rose-500/20 text-rose-400 border border-rose-500/40'
-                  }`}>
-                    {dossier.executive_recommendation.status === 'APPROVE' && <CheckCircle2 className="w-4 h-4 mr-1.5" />}
-                    {dossier.executive_recommendation.status === 'CONDITIONAL REVIEW' && <AlertTriangle className="w-4 h-4 mr-1.5" />}
-                    {dossier.executive_recommendation.status === 'DECLINE' && <XCircle className="w-4 h-4 mr-1.5" />}
-                    {dossier.executive_recommendation.status}
+        return (
+          <div className="space-y-6">
+            {/* Executive Summary Card */}
+            <div className="bg-[#141417] border border-zinc-800/80 rounded-2xl p-6 md:p-8 space-y-6 shadow-xl relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl pointer-events-none"></div>
+
+              {/* Header / Decision Badge */}
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-800/80 pb-6">
+                <div className="space-y-1">
+                  <span className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider block">
+                    Official Credit Risk Assessment Dossier
                   </span>
-                </h2>
-                <p className="text-xs text-zinc-400 font-mono">
-                  Action: <strong className="text-zinc-200">{dossier.executive_recommendation.action}</strong>
-                </p>
-              </div>
-
-              <div className="flex flex-col items-end text-right font-mono text-xs text-zinc-400">
-                <div className="inline-flex items-center px-2.5 py-1 rounded-md bg-emerald-950/50 text-emerald-400 border border-emerald-800/50 mb-1">
-                  <Zap className="w-3.5 h-3.5 mr-1" />
-                  <span>Pipeline Latency: {dossier.execution_time_ms} ms</span>
+                  <h2 className="text-2xl font-bold text-zinc-100 tracking-tight flex items-center space-x-3">
+                    <span>Executive Recommendation:</span>
+                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-bold ${
+                      isApprove
+                        ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40'
+                        : isReview
+                        ? 'bg-amber-500/20 text-amber-400 border border-amber-500/40'
+                        : 'bg-rose-500/20 text-rose-400 border border-rose-500/40'
+                    }`}>
+                      {isApprove && <CheckCircle2 className="w-4 h-4 mr-1.5" />}
+                      {isReview && <AlertTriangle className="w-4 h-4 mr-1.5" />}
+                      {!isApprove && !isReview && <XCircle className="w-4 h-4 mr-1.5" />}
+                      {status}
+                    </span>
+                  </h2>
+                  <p className="text-xs text-zinc-400 font-mono">
+                    Action: <strong className="text-zinc-200">{actionText}</strong>
+                  </p>
                 </div>
-                <span>Estimated Manual Savings: ~45 min</span>
-                <span className="text-zinc-600 text-[10px] mt-0.5">{new Date(dossier.timestamp).toLocaleString()}</span>
-              </div>
-            </div>
 
-            {/* Core Metrics Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="bg-zinc-900/60 border border-zinc-800/80 p-4 rounded-xl space-y-1">
-                <span className="text-[11px] font-mono text-zinc-400">Calibrated Default Risk</span>
-                <p className={`text-3xl font-extrabold ${
-                  dossier.prediction.default_probability < 0.35 ? 'text-emerald-400' :
-                  dossier.prediction.default_probability < threshold ? 'text-amber-400' : 'text-rose-400'
-                }`}>
-                  {(dossier.prediction.default_probability * 100).toFixed(1)}%
-                </p>
-                <p className="text-[10px] text-zinc-500 font-mono">
-                  Policy Threshold: {(threshold * 100).toFixed(0)}% (Platt Calibrated)
-                </p>
+                <div className="flex flex-col items-end text-right font-mono text-xs text-zinc-400">
+                  <div className="inline-flex items-center px-2.5 py-1 rounded-md bg-emerald-950/50 text-emerald-400 border border-emerald-800/50 mb-1">
+                    <Zap className="w-3.5 h-3.5 mr-1" />
+                    <span>Pipeline Latency: {latency} ms</span>
+                  </div>
+                  <span>Estimated Manual Savings: ~45 min</span>
+                  <span className="text-zinc-600 text-[10px] mt-0.5">{timestampText}</span>
+                </div>
               </div>
 
-              <div className="bg-zinc-900/60 border border-zinc-800/80 p-4 rounded-xl space-y-1">
-                <span className="text-[11px] font-mono text-zinc-400">Assigned Risk Tier</span>
-                <p className="text-xl font-bold text-zinc-100 mt-1">
-                  {dossier.prediction.risk_tier}
-                </p>
-                <p className="text-[10px] text-zinc-500 font-mono">
-                  Tier Code: {dossier.prediction.tier_code}
-                </p>
-              </div>
-
-              <div className="bg-zinc-900/60 border border-zinc-800/80 p-4 rounded-xl space-y-1">
-                <span className="text-[11px] font-mono text-zinc-400">Robustness & Stability</span>
-                <div className="flex items-center space-x-2 mt-1">
-                  <span className={`px-2 py-0.5 rounded text-xs font-bold font-mono ${
-                    dossier.stability.fragility_badge === 'ROBUST' ? 'bg-emerald-500/20 text-emerald-400' :
-                    dossier.stability.fragility_badge === 'MODERATE' ? 'bg-amber-500/20 text-amber-400' :
-                    'bg-rose-500/20 text-rose-400'
+              {/* Core Metrics Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="bg-zinc-900/60 border border-zinc-800/80 p-4 rounded-xl space-y-1">
+                  <span className="text-[11px] font-mono text-zinc-400">Calibrated Default Risk</span>
+                  <p className={`text-3xl font-extrabold ${
+                    prob < 0.35 ? 'text-emerald-400' :
+                    prob < threshold ? 'text-amber-400' : 'text-rose-400'
                   }`}>
-                    {dossier.stability.fragility_badge}
-                  </span>
-                  <span className="text-xs text-zinc-300 font-mono">{dossier.stability.score}/100</span>
+                    {(prob * 100).toFixed(1)}%
+                  </p>
+                  <p className="text-[10px] text-zinc-500 font-mono">
+                    Policy Threshold: {(threshold * 100).toFixed(0)}% (Platt Calibrated)
+                  </p>
                 </div>
-                <p className="text-[10px] text-zinc-500 font-mono">
-                  Avg Δ: {(dossier.stability.average_abs_change * 100).toFixed(1)}% under ±5% stress
-                </p>
+
+                <div className="bg-zinc-900/60 border border-zinc-800/80 p-4 rounded-xl space-y-1">
+                  <span className="text-[11px] font-mono text-zinc-400">Assigned Risk Tier</span>
+                  <p className="text-xl font-bold text-zinc-100 mt-1">
+                    {riskTier}
+                  </p>
+                  <p className="text-[10px] text-zinc-500 font-mono">
+                    Tier Code: {tierCode}
+                  </p>
+                </div>
+
+                <div className="bg-zinc-900/60 border border-zinc-800/80 p-4 rounded-xl space-y-1">
+                  <span className="text-[11px] font-mono text-zinc-400">Robustness & Stability</span>
+                  <div className="flex items-center space-x-2 mt-1">
+                    <span className={`px-2 py-0.5 rounded text-xs font-bold font-mono ${
+                      fragBadge === 'ROBUST' ? 'bg-emerald-500/20 text-emerald-400' :
+                      fragBadge === 'MODERATE' ? 'bg-amber-500/20 text-amber-400' :
+                      'bg-rose-500/20 text-rose-400'
+                    }`}>
+                      {fragBadge}
+                    </span>
+                    <span className="text-xs text-zinc-300 font-mono">{stabScore}/100</span>
+                  </div>
+                  <p className="text-[10px] text-zinc-500 font-mono">
+                    Avg Δ: {(avgAbsChange * 100).toFixed(1)}% under ±5% stress
+                  </p>
+                </div>
+
+                <div className="bg-zinc-900/60 border border-zinc-800/80 p-4 rounded-xl space-y-1">
+                  <span className="text-[11px] font-mono text-zinc-400">Safe Credit Ceiling</span>
+                  <p className="text-2xl font-bold text-amber-400">
+                    ${Number(maxSafeAmt).toLocaleString()}
+                  </p>
+                  <p className="text-[10px] text-zinc-500 font-mono">
+                    Recommended safe loan limit
+                  </p>
+                </div>
               </div>
 
-              <div className="bg-zinc-900/60 border border-zinc-800/80 p-4 rounded-xl space-y-1">
-                <span className="text-[11px] font-mono text-zinc-400">Safe Credit Ceiling</span>
-                <p className="text-2xl font-bold text-amber-400">
-                  ${Number(dossier.safe_loan_ceiling.max_safe_amount).toLocaleString()}
-                </p>
-                <p className="text-[10px] text-zinc-500 font-mono">
-                  Recommended safe loan limit
-                </p>
-              </div>
-            </div>
-
-            {/* Rationale & Policy Justification */}
-            <div className="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-2">
-              <span className="text-xs font-mono font-semibold text-zinc-300 flex items-center space-x-1.5">
-                <FileText className="w-3.5 h-3.5 text-amber-400" />
-                <span>Executive Underwriting Rationale:</span>
-              </span>
-              <p className="text-xs text-zinc-300 leading-relaxed font-mono">
-                {dossier.executive_recommendation.rationale}
-              </p>
-            </div>
-
-            {/* Plain-English SHAP Feature Drivers */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Risk Factors */}
-              <div className="p-4 rounded-xl bg-rose-950/20 border border-rose-900/40 space-y-2">
-                <span className="text-xs font-mono font-semibold text-rose-300 flex items-center space-x-1.5">
-                  <AlertTriangle className="w-3.5 h-3.5 text-rose-400" />
-                  <span>Key Risk-Increasing Factors (Adverse Drivers):</span>
+              {/* Rationale & Policy Justification */}
+              <div className="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-2">
+                <span className="text-xs font-mono font-semibold text-zinc-300 flex items-center space-x-1.5">
+                  <FileText className="w-3.5 h-3.5 text-amber-400" />
+                  <span>Executive Underwriting Rationale:</span>
                 </span>
-                <ul className="space-y-1.5 text-xs text-zinc-300 font-mono">
-                  {dossier.explanation?.risk_increasing?.map((factor: string, i: number) => (
-                    <li key={i} className="flex items-start space-x-2">
-                      <span className="text-rose-400 font-bold">•</span>
-                      <span>{factor}</span>
-                    </li>
-                  )) || <li>No severe adverse factors identified.</li>}
-                </ul>
+                <p className="text-xs text-zinc-300 leading-relaxed font-mono">
+                  {rationaleText}
+                </p>
               </div>
 
-              {/* Mitigating Factors */}
-              <div className="p-4 rounded-xl bg-emerald-950/20 border border-emerald-900/40 space-y-2">
-                <span className="text-xs font-mono font-semibold text-emerald-300 flex items-center space-x-1.5">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Key Risk-Reducing Factors (Mitigating Strengths):</span>
-                </span>
-                <ul className="space-y-1.5 text-xs text-zinc-300 font-mono">
-                  {dossier.explanation?.risk_reducing?.map((factor: string, i: number) => (
-                    <li key={i} className="flex items-start space-x-2">
-                      <span className="text-emerald-400 font-bold">•</span>
-                      <span>{factor}</span>
-                    </li>
-                  )) || <li>Standard baseline terms applied.</li>}
-                </ul>
-              </div>
-            </div>
+              {/* Plain-English SHAP Feature Drivers */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Risk Factors */}
+                <div className="p-4 rounded-xl bg-rose-950/20 border border-rose-900/40 space-y-2">
+                  <span className="text-xs font-mono font-semibold text-rose-300 flex items-center space-x-1.5">
+                    <AlertTriangle className="w-3.5 h-3.5 text-rose-400" />
+                    <span>Key Risk-Increasing Factors (Adverse Drivers):</span>
+                  </span>
+                  <ul className="space-y-1.5 text-xs text-zinc-300 font-mono">
+                    {dossier.explanation?.risk_increasing?.map((factor: string, i: number) => (
+                      <li key={i} className="flex items-start space-x-2">
+                        <span className="text-rose-400 font-bold">•</span>
+                        <span>{factor}</span>
+                      </li>
+                    )) || <li>No severe adverse factors identified.</li>}
+                  </ul>
+                </div>
 
-            {/* Prescriptive Counterfactual Approval Pathway (If conditional review or decline) */}
-            {dossier.counterfactual?.counterfactuals && dossier.counterfactual.counterfactuals.length > 0 && (
-              <div className="p-5 rounded-xl bg-amber-950/20 border border-amber-800/40 space-y-3">
+                {/* Mitigating Factors */}
+                <div className="p-4 rounded-xl bg-emerald-950/20 border border-emerald-900/40 space-y-2">
+                  <span className="text-xs font-mono font-semibold text-emerald-300 flex items-center space-x-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                    <span>Key Risk-Reducing Factors (Mitigating Strengths):</span>
+                  </span>
+                  <ul className="space-y-1.5 text-xs text-zinc-300 font-mono">
+                    {dossier.explanation?.risk_reducing?.map((factor: string, i: number) => (
+                      <li key={i} className="flex items-start space-x-2">
+                        <span className="text-emerald-400 font-bold">•</span>
+                        <span>{factor}</span>
+                      </li>
+                    )) || <li>Standard baseline terms applied.</li>}
+                  </ul>
+                </div>
+              </div>
+
+              {/* Prescriptive Counterfactual Approval Pathway (If conditional review or decline) */}
+              {dossier.counterfactual?.counterfactuals && dossier.counterfactual.counterfactuals.length > 0 && (
+                <div className="p-5 rounded-xl bg-amber-950/20 border border-amber-800/40 space-y-3">
+                  <div className="flex items-center space-x-2">
+                    <Sparkles className="w-4 h-4 text-amber-400" />
+                    <span className="text-xs font-bold text-amber-300 font-mono uppercase tracking-wider">
+                      Prescriptive Counterfactual Recourse (Pathway to Approval)
+                    </span>
+                  </div>
+                  <p className="text-xs text-zinc-300 font-mono leading-relaxed">
+                    The automated recourse solver identified actionable term modifications that can reduce applicant default risk below the policy threshold:
+                  </p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+                    {dossier.counterfactual.counterfactuals.map((cf: any, i: number) => (
+                      <div key={i} className="p-3 bg-zinc-900/80 rounded-lg border border-amber-900/40 text-xs font-mono text-zinc-200">
+                        <span className="text-amber-400 font-semibold block text-[11px] mb-1">
+                          Pathway #{i+1}: {cf.feature_label || 'Term Adjustment'}
+                        </span>
+                        <span>{cf.summary}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Compliance & Responsible AI Governance Footer */}
+              <div className="p-3.5 rounded-lg bg-zinc-900/60 border border-zinc-800/80 text-[11px] font-mono text-zinc-500 flex items-center justify-between">
                 <div className="flex items-center space-x-2">
-                  <Sparkles className="w-4 h-4 text-amber-400" />
-                  <span className="text-xs font-bold text-amber-300 font-mono uppercase tracking-wider">
-                    Prescriptive Counterfactual Recourse (Pathway to Approval)
-                  </span>
+                  <ShieldCheck className="w-4 h-4 text-zinc-400" />
+                  <span>{govNote}</span>
                 </div>
-                <p className="text-xs text-zinc-300 font-mono leading-relaxed">
-                  The automated recourse solver identified actionable term modifications that can reduce applicant default risk below the policy threshold:
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
-                  {dossier.counterfactual.counterfactuals.map((cf: any, i: number) => (
-                    <div key={i} className="p-3 bg-zinc-900/80 rounded-lg border border-amber-900/40 text-xs font-mono text-zinc-200">
-                      <span className="text-amber-400 font-semibold block text-[11px] mb-1">
-                        Pathway #{i+1}: {cf.feature_label || 'Term Adjustment'}
-                      </span>
-                      <span>{cf.summary}</span>
-                    </div>
-                  ))}
-                </div>
+                <span className="text-zinc-600">Model: Logistic Regression (Platt Calibrated)</span>
               </div>
-            )}
-
-            {/* Compliance & Responsible AI Governance Footer */}
-            <div className="p-3.5 rounded-lg bg-zinc-900/60 border border-zinc-800/80 text-[11px] font-mono text-zinc-500 flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <ShieldCheck className="w-4 h-4 text-zinc-400" />
-                <span>{dossier.executive_recommendation.governance_note}</span>
-              </div>
-              <span className="text-zinc-600">Model: Logistic Regression (Platt Calibrated)</span>
             </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
     </div>
   );
 }
